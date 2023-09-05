@@ -1,0 +1,35 @@
+<div class="seat-legend-wrapper">
+  <p class="seat-legend-header">Legend</p>
+  <div>
+    <div class="seat-wrapper-wrapper">
+      <div class="seat-wrapper">
+        <app-seat [seat]="reservedSeat" clickable="false"></app-seat>
+      </div>
+    </div>
+    <span>Reserved seats</span>
+  </div>
+  <div>
+    <div class="seat-wrapper-wrapper">
+      <div class="seat-wrapper">
+        <app-seat [seat]="boughtSeat" clickable="false"></app-seat>
+      </div>
+    </div>
+    <span>Purchased seats</span>
+  </div>
+  <div>
+    <div class="seat-wrapper-wrapper">
+      <div class="seat-wrapper">
+        <app-seat [seat]="freeSeat" clickable="false"></app-seat>
+      </div>
+    </div>
+    <span>Free seats</span>
+  </div>
+  <div>
+    <div class="seat-wrapper-wrapper">
+      <div class="seat-wrapper">
+        <app-seat [seat]="chosenSeat" clickable="false"></app-seat>
+      </div>
+    </div>
+    <span>Chosen seats</span>
+  </div>
+</div>

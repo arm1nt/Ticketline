@@ -1,0 +1,40 @@
+<div class="standing-wrapper" [ngStyle]="{
+  'left': standing.geometry.x + 'px',
+  'top': standing.geometry.y + 'px',
+  'width': standing.geometry.width + 'px',
+  'height': standing.geometry.height + 'px'
+  }" >
+
+  <div *ngIf="(standing.geometry.width >= 190) && (standing.geometry.height >= 100)" class="standing-count-positioning">
+    Taken: {{this.reservedSpots + purchasedSpots}}/{{this.standing.capacity}}<br>
+    Chosen: {{this.chosenTickets.length}}/{{this.freeSpots}}<br>
+    <button [ngClass]="{'disabled-button': ((this.reservedSpots + purchasedSpots) === this.standing.capacity)}"  mat-raised-button class="add-button" (click)="selectSpot()">Choose spots in section</button>
+  </div>
+
+  <div *ngIf="(standing.geometry.width >= 120) && (standing.geometry.width < 190) && (standing.geometry.height >= 100)" class="standing-count-positioning">
+    Taken: {{this.reservedSpots + purchasedSpots}}/{{this.standing.capacity}}<br>
+    Chosen: {{this.chosenTickets.length}}/{{this.freeSpots}}<br>
+    <button [ngClass]="{'disabled-button': ((this.reservedSpots + purchasedSpots) === this.standing.capacity)}" mat-raised-button class="add-button" (click)="selectSpot()">Choose spots</button>
+  </div>
+
+  <div *ngIf="(standing.geometry.width < 120) && (standing.geometry.height > 50)" class="standing-count-positioning">
+    <button [ngClass]="{'disabled-button': ((this.reservedSpots + purchasedSpots) === this.standing.capacity)}" style="background-color: transparent; border: none;" (click)="selectSpot()"><span class="material-icons add-button" [ngClass]="{'disabled-button': ((this.reservedSpots + purchasedSpots) === this.standing.capacity)}" > add </span></button>
+  </div>
+
+  <div *ngIf="(standing.geometry.height <= 50) && (standing.geometry.width >= 190)" class="standing-count-positioning">
+    <div style="display: flex; flex-direction: row; justify-content: center;">
+      <span>
+        <button [ngClass]="{'disabled-button': ((this.reservedSpots + purchasedSpots) === this.standing.capacity)}" mat-raised-button class="add-button" style="margin-top: 0.4em;" (click)="selectSpot()">Choose spots in section</button>
+      </span>
+    </div>
+  </div>
+
+  <div *ngIf="(standing.geometry.height <= 50) && (standing.geometry.width < 120)" class="standing-count-positioning">
+    <button [ngClass]="{'disabled-button': ((this.reservedSpots + purchasedSpots) === this.standing.capacity)}" style="background-color: transparent; border: none;" (click)="selectSpot()"><span class="material-icons add-button" [ngClass]="{'disabled-button': ((this.reservedSpots + purchasedSpots) === this.standing.capacity)}"> add </span></button>
+  </div>
+
+  <div *ngIf="(standing.geometry.height <= 50) && (standing.geometry.width < 190) && (standing.geometry.width >= 120)" class="standing-count-positioning">
+    <button [ngClass]="{'disabled-button': ((this.reservedSpots + purchasedSpots) === this.standing.capacity)}"  mat-raised-button class="add-button" (click)="selectSpot()">Choose spots</button>
+  </div>
+</div>
+  

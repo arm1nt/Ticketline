@@ -1,0 +1,46 @@
+<div class="top-row">
+  <h1 class="display-1"> News</h1>
+  <mat-form-field *ngIf="isLoggedIn()" appearance="outline">
+    <mat-label>Select news:</mat-label>
+    <mat-select (selectionChange)="loadNews()" [(ngModel)]="mode">
+      <mat-option *ngFor="let m of modes" [value]="modeFromName(m)">
+        {{m}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>
+<button *ngIf="isAdmin() && isLoggedIn()" [routerLink]="'/news/create'" color="primary" mat-raised-button>Create News</button>
+<mat-card *ngIf="upToDate" class="card">
+  <mat-card-title>You are up to date!</mat-card-title>
+  <mat-card-content>Come back later to see more news!</mat-card-content>
+  <mat-card-actions>
+    <button mat-button (click)="loadAllNews()">Load all news</button>
+  </mat-card-actions>
+</mat-card>
+<mat-card *ngFor="let n of getNews()" class="card">
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title>
+        {{n.title}}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{toTimesStampSubtitle(n.publishedAt)}}
+      </mat-card-subtitle>
+    </mat-card-title-group>
+  </mat-card-header>
+  <img *ngIf="n.image" alt="" mat-card-image src="{{n.image}}">
+  <mat-card-content>
+    {{n.text}}
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button [routerLink]="[n.id]">Read more...</button>
+  </mat-card-actions>
+</mat-card>
+<mat-card *ngIf="!modeIsAll" class="card">
+  <mat-card-title>Not finding what you are looking for?</mat-card-title>
+  <mat-card-content>Come back later to see more news!</mat-card-content>
+  <mat-card-actions>
+    <button (click)="loadReadNews()" *ngIf="!modeIsRead" mat-button>Show already read news</button>
+    <button (click)="loadUnreadNews()" *ngIf="!modeIsUnread" mat-button>Show latest news</button>
+  </mat-card-actions>
+</mat-card>

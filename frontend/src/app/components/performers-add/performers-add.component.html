@@ -1,0 +1,76 @@
+<h1 class="display-1">{{heading}}</h1>
+<mat-button-toggle-group [(ngModel)]="selectedOption">
+  <mat-button-toggle value="artist" >Artist</mat-button-toggle>
+  <mat-button-toggle value="band">Band</mat-button-toggle>
+</mat-button-toggle-group>
+<form #form="ngForm" *ngIf="selectedOption==='artist'"  (ngSubmit)="onSubmit(form)" class="performer-form">
+  <mat-form-field appearance="outline">
+    <mat-label>Performer Name</mat-label>
+    <input #name
+           type="text"
+           [(ngModel)]="artist.performerName"
+           matInput
+           maxlength="255"
+           name="name"
+           placeholder="Performer Name"
+           required>
+    <mat-hint align="end">{{name.value.length}}/255</mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>First Name</mat-label>
+    <input #name
+           type="text"
+           [(ngModel)]="artist.firstName"
+           matInput
+           maxlength="255"
+           name="name"
+           placeholder="First Name"
+           required>
+    <mat-hint align="end">{{name.value.length}}/255</mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Last Name</mat-label>
+    <input #name
+           type="text"
+           [(ngModel)]="artist.lastName"
+           matInput
+           maxlength="255"
+           name="name"
+           placeholder="Last Name"
+           required>
+    <mat-hint align="end">{{name.value.length}}/255</mat-hint>
+  </mat-form-field>
+
+
+  <div class="button-row">
+    <button (click)="resetForm()" color="warn" mat-raised-button type="reset">Reset Form</button>
+    <button [disabled]="!form.valid" color="primary" mat-raised-button type="submit">Create</button>
+  </div>
+</form>
+
+<form #form="ngForm" *ngIf="selectedOption==='band'"  (ngSubmit)="onSubmit(form)" class="performer-form">
+  <mat-form-field appearance="outline">
+    <mat-label>Performer Name</mat-label>
+    <input #name
+           type="text"
+           [(ngModel)]="band.performerName"
+           matInput
+           maxlength="255"
+           name="name"
+           placeholder="Performer Name"
+           required>
+    <mat-hint align="end">{{name.value.length}}/255</mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Artists</mat-label>
+    <mat-select [(ngModel)]="band.artists" name="performers" required multiple placeholder="Performers">
+      <mat-option *ngFor="let artist of availableArtists | async" [value]="artist">
+        {{artist.performerName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="button-row">
+    <button (click)="resetForm()" color="warn" mat-raised-button type="reset">Reset Form</button>
+    <button [disabled]="!form.valid" color="primary" mat-raised-button type="submit">Create</button>
+  </div>
+</form>

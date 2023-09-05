@@ -1,0 +1,38 @@
+<h1 *ngIf="!editLayoutFlag" class="header">Add layout to Eventhall</h1>
+
+<table *ngIf="!editLayoutFlag" mat-table [dataSource]="listEventhalls" class="content">
+    <ng-container matColumnDef="hallname">
+        <th mat-header-cell *matHeaderCellDef>Eventhall Name</th>
+        <td mat-cell *matCellDef="let hall"> {{hall.name}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="chooseHall">
+        <th mat-header-cell *matHeaderCellDef></th>
+        <td mat-cell *matCellDef="let hall">
+            <span class="right-side-of-row">
+                <button mat-flat-button color="primary" (click)="selectThisHall(hall.name, hall.id)">Choose</button>
+            </span>
+        </td>
+
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsToShow"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsToShow"></tr>
+</table>
+
+<mat-paginator *ngIf="!editLayoutFlag" [length]="numberOfEventhalls" [pageSize]="pageSize" (page)="nextPage($event)">
+
+</mat-paginator>
+
+
+<span *ngIf="(selectedHall !== undefined) && !editLayoutFlag" class="selection">
+    Add layout to: <strong style="margin-left: 0.2em;">{{selectedHall}}</strong>
+</span>
+
+
+<span *ngIf="!editLayoutFlag" class="continue-button-wrapper">
+    <button [disabled]="selectedHall === undefined"  mat-flat-button color="primary" (click)="editLayout()">Continue</button>
+</span>
+
+
+<app-create-floorplan *ngIf="editLayoutFlag" [inputEventHall]="eventHallId" [generalEventHallInformation]="eventHallInformation"></app-create-floorplan>

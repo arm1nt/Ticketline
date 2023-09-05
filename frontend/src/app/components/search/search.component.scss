@@ -1,0 +1,161 @@
+@use '@angular/material' as mat;
+
+$my-palette-indigo: mat.define-palette(mat.$indigo-palette);
+$my-palette-pink: mat.define-palette(mat.$pink-palette);
+
+
+.my-primary-color-indigo {
+    color: mat.get-color-from-palette($my-palette-indigo, default);
+}
+
+.my-contrast-color-pink {
+    color: mat.get-color-from-palette($my-palette-pink, default);
+}
+
+.input-field-half {
+  width: 49%;
+}
+
+.input-field-third {
+  width: 32%;
+}
+
+.input-field-full-width {
+  width: 100%;
+}
+
+.select-search-box {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-evenly;
+
+  margin-top: 2px;
+  margin-left: 10px;
+  margin-right: 10px;
+
+    background-color: mat.get-color-from-palette($my-palette-indigo, default);
+
+    border-radius: 4px;
+}
+
+.select-search-box-crop {
+    /*display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;*/
+
+    text-align: center;
+
+    margin-top: 2px;
+    margin-left: 10px;
+    margin-right: 10px;
+
+    background-color: mat.get-color-from-palette($my-palette-indigo, default);
+
+    border-radius: 4px;
+}
+
+.select-crop {
+    border-radius: 7px;
+    color: white;
+    padding: 0.5em;
+}
+
+.select-crop:hover {
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    background-color: mat.get-color-from-palette($my-palette-pink, 600);
+}
+
+.currently-selected-search {
+    background-color: mat.get-color-from-palette($my-palette-indigo, 700);
+    font-weight: 500;
+    transform: scale(1.01);
+}
+
+.select-search {
+    padding: 20px;
+    width: 33%;
+    text-align: center;
+    border-radius: 7px;
+    margin: 5px;
+    color: white;
+}
+
+.select-search:hover {
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    background-color: mat.get-color-from-palette($my-palette-pink, 600);
+}
+
+.searchCard {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    max-width: 1500px;
+}
+
+input:focus {
+    outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera /
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/ Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+
+/*::ng-deep .mat-form-field-flex > .mat-form-field-infix { padding: 0.4em 0px !important;}
+::ng-deep .mat-form-field-label-wrapper { top: -1.5em; }
+
+::ng-deep .mat-form-field-appearance-outline.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label {
+    transform: translateY(-1.1em) scale(.75);
+    width: 133.33333%;
+}
+
+::ng-deep .mat-form-field-wrapper {
+    padding-bottom: 0px;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-flex {
+    padding: 0.75em;
+}*/
+
+.card {
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+
+table {
+  width: 100%;
+}
+
+.snack-success {
+  background-color: #5db844;
+  color: white;
+}
+
+.snack-error {
+  background-color: #f44336;
+  color: white;
+}
+
+mat-slider {
+  width: 300px;
+}
+
+p {
+  text-align: center;
+}

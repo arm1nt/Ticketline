@@ -1,0 +1,325 @@
+<div *ngIf="loaded" class="wrapper">
+    <mat-card>
+        <div class="settings-container">
+
+            <mat-card-content class="header">
+                <h2 *ngIf="!(editEmailFlag)">Account Settings</h2>
+                <h2 *ngIf="(editEmailFlag)">Edit Information</h2>
+            </mat-card-content>
+
+            <!--Display Username-->
+            <mat-card class="mat-card-style">
+                <div class="username-row-wrapper">
+                    <span class="row-caption">Username</span>
+
+                    <div class="username-firstname-lastname-email-address-content-wrapper">
+                        <span class="username-firstname-lastname-address-content">
+                            {{user.username}}
+                        </span>
+                        <span class="username-email-address-extra-info">
+                            The username can not be changed!
+                        </span>
+                    </div>
+                </div>
+            </mat-card>
+
+            <!--Display and option to edit First name-->
+            <mat-card class="mat-card-style">
+                <div class="first-last-name-address-row-wrapper">
+                    <span class="row-caption">First Name</span>
+
+                    <div *ngIf="!editFirstNameFlag" class="username-firstname-lastname-email-address-content-wrapper">
+                        <span class="username-firstname-lastname-address-content">
+                            {{user.firstName}}
+                        </span>
+                    </div>
+
+                    <!--div to edit first name-->
+                    <div *ngIf="editFirstNameFlag" class="username-firstname-lastname-email-password-content-edit-wrapper">
+                        <mat-form-field appearance="outline" style="margin-bottom: 0em;">
+                            <mat-label> First Name</mat-label>
+                            <input matInput appBlankValidator minlength="2" maxlength="100" placeholder="First Name" [(ngModel)]="editedFirstName" #firstName="ngModel">
+                            <mat-error *ngIf="firstName.invalid">
+                                <p *ngIf ="editedFirstName.trim() === ''">Firstname cant be blank</p>
+                                <div *ngIf ="!(editedFirstName.trim() === '')">
+                                    <p *ngIf="editedFirstName.length < 2"> First name must be atleast 2 and at most 100 characters</p>
+                                    <p *ngIf="editedFirstName.length > 100">Firstname can be at most 100 characters long</p>
+                                </div>
+
+                            </mat-error>
+                            <mat-hint *ngIf="editedFirstName === ''">First name is required</mat-hint>
+                        </mat-form-field>
+                        <span style="margin-top: 1em;">
+                            <button color="primary" mat-flat-button (click)="changeFirstName()" [disabled]="firstName.invalid || editedFirstName ===''"> Save</button>
+                            <button style="margin-left: 0.5em;" color="warn" mat-flat-button (click)="cancelFirstNameEdit()">Cancel</button>
+                        </span>
+                    </div>
+
+
+                    <div *ngIf="!editFirstNameFlag" class="edit-button">
+                        <div>
+                            <mat-icon class="cursor-setting-pointer" (click)="editFirstName()">edit</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+
+            <!--Display and option to edit Last name-->
+            <mat-card class="mat-card-style">
+                <div class="first-last-name-address-row-wrapper">
+                    <span class="row-caption">Last Name</span>
+
+                    <div *ngIf="!editLastNameFlag" class="username-firstname-lastname-email-address-content-wrapper">
+                        <span class="username-firstname-lastname-address-content">
+                            {{user.lastName}}
+                        </span>
+                    </div>
+
+                    <!--DIV TO EDIT-->
+                    <div *ngIf="editLastNameFlag" class="username-firstname-lastname-email-password-content-edit-wrapper">
+                        <mat-form-field appearance="outline" style="margin-bottom: 0;">
+                            <mat-label> Last Name</mat-label>
+                            <input matInput appBlankValidator minlength="2" maxlength="100" placeholder="Last Name" [(ngModel)]="editedLastName" #lastName="ngModel">
+                            <mat-error *ngIf="lastName.invalid">
+                                <p *ngIf="editedLastName.trim() === ''">Lastname can not be blank</p>
+                                <p *ngIf="editedLastName.length < 2 && !(editedLastName.trim() === '')">Lastname must be atleast 2 and at most 100 characters long</p>
+                            </mat-error>
+                            <mat-hint *ngIf="editedLastName === ''">Last name is required</mat-hint>
+                        </mat-form-field>
+                        <span style="margin-top: 1em;">
+                            <button color="primary" mat-flat-button (click)="changeLastName()" [disabled]="lastName.invalid || editedLastName === ''"> Save</button>
+                            <button style="margin-left: 0.5em;" color="warn" mat-flat-button (click)="cancelLastNameEdit()">Cancel</button>
+                        </span>
+                    </div>
+
+
+                    <div *ngIf="!editLastNameFlag" class="edit-button">
+                        <div>
+                            <mat-icon class="cursor-setting-pointer" (click)="editLastName()">edit</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+
+
+            <!--Display and option to edit email-->
+            <mat-card class="email-container">
+                <div class="email-row-wrapper">
+                    <span class="row-caption">Email</span>
+
+                    <div *ngIf="!editEmailFlag" class="username-firstname-lastname-email-address-content-wrapper">
+                        <span class="email-content">
+                            {{user.email}}
+                        </span>
+                        <span class="username-email-address-extra-info">
+                            This email is connected to your account.
+                        </span>
+                    </div>
+                    <div *ngIf="editEmailFlag" class="username-firstname-lastname-email-password-content-edit-wrapper">
+                        <mat-form-field appearance="outline" style="margin-bottom: 0.1em;">
+                            <mat-label>Email</mat-label>
+                            <input matInput appEmailValidator placeholder="email" [(ngModel)]="editedEmail" #checkEmail="ngModel">
+                            <mat-error *ngIf="checkEmail.invalid"> Email invalid </mat-error>
+                            <mat-hint *ngIf="editedEmail === ''"> Email is required</mat-hint>
+                        </mat-form-field>
+                        <span style="font-size: 0.8em; margin-bottom: 1em;">Please confirm your new email address: </span>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Confirm email</mat-label>
+                            <input matInput appEmailValidator placeholder="email" [(ngModel)]="userConfirmChangeEmail" #checkConfirmEmail="ngModel">
+                            <mat-error *ngIf="checkConfirmEmail.invalid"> Email invalid </mat-error>
+                        </mat-form-field>
+                        <span style="margin-top: 1em;">
+                            <button color="primary" mat-flat-button [disabled]="(editedEmail ==='') || (!(editedEmail === userConfirmChangeEmail)) || (checkEmail.invalid)" (click)="changeEmail()">Save</button>
+                            <button style="margin-left: 0.5em;" color="warn" mat-flat-button (click)="cancelEmailEdit()">Cancel</button>
+                        </span>
+                    </div>
+                    <div *ngIf="!editEmailFlag" class="edit-button">
+                        <div>
+                            <mat-icon class="cursor-setting-pointer" (click)="editEmail()">edit</mat-icon>
+                        </div>
+                    </div>
+                </div>
+            </mat-card>
+
+            <!--Display and option to edit Address-->
+            <mat-card class="address-container">
+                <div class="first-last-name-address-row-wrapper">
+                    <span class="row-caption">Address</span>
+
+                    <div *ngIf="!toAddAddress" class="username-firstname-lastname-email-address-content-wrapper">
+                        <span style="font-size: 1.5em; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;">
+                        </span>
+                    </div>
+                    <div *ngIf="toAddAddress" class="no-address-added-wrapper">
+                        <span class="address-info-wrapper">
+                            <span class="username-email-address-extra-info">
+                                You have not added an address yet.
+                            </span>
+                        </span>
+                    </div>
+
+
+                    <div *ngIf="!toAddAddress" class="edit-button">
+                        <div>
+                            <mat-icon *ngIf="!editAddressFlag" class="cursor-setting-pointer" (click)="editAddress()">edit</mat-icon>
+                        </div>
+                    </div>
+                    <div *ngIf="toAddAddress" style="width: 30%; display: flex; flex-direction: column; justify-content: center; margin-left: 0.2em; margin-right: 1em;">
+                        <div style="display: flex; flex-direction: row; justify-content: end;">
+                            <button mat-flat-button color="primary" (click)="editAddress()">Add address</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div *ngIf="!toAddAddress || editAddressFlag">
+                    <div class="address-row-container">
+                        <div class="indent"></div>
+                        <div class="address-row-caption">Country:</div>
+                        <div *ngIf="!editAddressFlag" class="username-firstname-lastname-email-address-content-wrapper">
+                            <span class="username-firstname-lastname-address-content">
+                                {{(user.country === null) ? "n.a." : user.country}}
+                            </span>
+                        </div>
+                        <div *ngIf="editAddressFlag" class="username-firstname-lastname-email-address-content-wrapper">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Country</mat-label>
+                                <input matInput appBlankValidator minlength="2" maxlength="100" placeholder="Country" [(ngModel)]="editedAddress.country" #addressCountry="ngModel">
+                                <mat-error *ngIf="addressCountry.invalid">
+                                    <p *ngIf="editedAddress.country.trim() === ''">Country cant be blank</p>
+                                    <p *ngIf="editedAddress.country.length < 2 && !(editedAddress.country.trim() === '')">Country must consist of least 2 and at most 100 characters</p>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="address-row-container">
+                        <div class="indent"></div>
+                        <div class="address-row-caption">City:</div>
+                        <div *ngIf="!editAddressFlag" class="username-firstname-lastname-email-address-content-wrapper">
+                            <span class="username-firstname-lastname-address-content">
+                                {{(user.city === null) ? "n.a." : user.city}}
+                            </span>
+                        </div>
+                        <div *ngIf="editAddressFlag" class="username-firstname-lastname-email-address-content-wrapper">
+                            <mat-form-field appearance="outline" class="address-edit-row">
+                                <mat-label>City</mat-label>
+                                <input matInput appBlankValidator minlength="2" maxlength="100" placeholder="City" [(ngModel)]="editedAddress.city" #addressCity="ngModel">
+                                <mat-error *ngIf="addressCity.invalid">
+                                    <p *ngIf="editedAddress.city.trim() === ''">City cant be blank</p>
+                                    <p *ngIf="editedAddress.city.length < 2 && !(editedAddress.city.trim() === '')">City must consist of least 2 and at most 100 characters</p>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="address-row-container">
+                        <div class="indent"></div>
+                        <div class="address-row-caption">Zip Code:</div>
+                        <div *ngIf="!editAddressFlag" class="username-firstname-lastname-email-address-content-wrapper">
+                            <span class="username-firstname-lastname-address-content">
+                                {{(user.zipCode === null) ? "n.a." : user.zipCode}}
+                            </span>
+                        </div>
+                        <div *ngIf="editAddressFlag" class="username-firstname-lastname-email-address-content-wrapper">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Zip Code</mat-label>
+                                <input matInput appBlankValidator minlength="3" maxlength="100" placeholder="Zip Code" [(ngModel)]="editedAddress.zipCode" #addressZipCode="ngModel">
+                                <mat-error *ngIf="addressZipCode.invalid">
+                                    <p *ngIf="editedAddress.zipCode.trim() === ''">ZipCode cant be blank</p>
+                                    <p *ngIf="editedAddress.zipCode.length < 3 && !(editedAddress.zipCode.trim() === '')">ZipCode must consist of least 3 and at most 100 characters</p>
+                                </mat-error>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="address-row-container">
+                        <div class="indent"></div>
+                        <div class="address-row-caption">Street:</div>
+                        <div *ngIf="!editAddressFlag" class="username-firstname-lastname-email-address-content-wrapper">
+                            <span class="username-firstname-lastname-address-content">
+                                {{(user.street === null) ? "n.a." : user.street}}
+                            </span>
+                        </div>
+                        <div *ngIf="editAddressFlag" class="username-firstname-lastname-email-address-content-wrapper">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Street</mat-label>
+                                <input matInput appBlankValidator minlength="2" maxlength="100" placeholder="Street" [(ngModel)]="editedAddress.street" #addressStreet="ngModel">
+                                <mat-error *ngIf="addressStreet.invalid">
+                                    <p *ngIf="editedAddress.street.trim() === ''">Street cant be blank</p>
+                                    <p *ngIf="editedAddress.street.length < 2 && !(editedAddress.street.trim() === '')">Street must consist of least 2 and at most 100 characters</p>
+                                </mat-error>
+                            </mat-form-field>
+                            <span *ngIf="editAddressFlag" style="margin-top: 1em;">
+                                <button color="primary" mat-flat-button (click)="changeAddress()" [disabled]="countryIsBlank() || cityIsBlank()
+                                || zipCodeIsBlank() || streetIsBlank() || editedAddress.country.length < 2
+                                || editedAddress.city.length < 2 || editedAddress.zipCode.length < 3 || editedAddress.street.length < 2">Save</button>
+                                <button style="margin-left: 0.5em;" color="warn" mat-flat-button (click)="cancelAddressEdit()">Cancel</button>
+                            </span>
+                        </div>
+                    </div>
+
+                </div>
+            </mat-card>
+
+
+            <!--Change password-->
+            <mat-card class="password-container">
+                <div class="password-row-wrapper">
+                    <span class="password-row-caption">Password</span>
+                    <div *ngIf="!editPasswordFlag" class="password-wrapper">
+                        <span>
+                            <a class="change-password-link" (click)="openConfirmationDialog()">Change password.</a>
+                        </span>
+                        <span id="increase-pw-security">Increase your security with a strong password.</span>
+                    </div>
+                    <div *ngIf="editPasswordFlag" class="username-firstname-lastname-email-password-content-edit-wrapper">
+                        <mat-form-field appearance="outline">
+                            <mat-label>New password</mat-label>
+                            <input type="password" id="pw" name="pw" minlength="8" appBlankValidator matInput placeholder="New password" [(ngModel)]="editedPassword" #pw="ngModel">
+                            <mat-error *ngIf="pw.invalid">
+                                <div *ngIf = "editedPassword.length < 8">
+                                    <p *ngIf = "editedPassword.trim() === ''"> Password must not be blank</p>
+                                    <p *ngIf = "!(editedPassword.trim() === '')">Password must be atleast 8 characters</p>
+                                </div>
+                                <div *ngIf ="editedPassword.length >= 8">
+                                    <p *ngIf = "editedPassword.trim() === ''">Password must not be blank</p>
+                                </div>
+                            </mat-error>
+
+                        </mat-form-field>
+                        <mat-form-field appearance="outline">
+                            <mat-label>Confirm new password</mat-label>
+                            <input type="password" minlength="8"  appBlankValidator matInput placeholder="Confirm new password" [(ngModel)]="editedPasswordConfirm" #pw2="ngModel">
+                            <mat-error *ngIf="pw2.invalid">
+                                <div *ngIf="editedPasswordConfirm.length < 8">
+                                    <p *ngIf="editedPasswordConfirm.trim() === ''">Password must not be blank</p>
+                                    <p *ngIf="!(editedPasswordConfirm.trim() === '')">Password must be atleast 8 characters</p>
+                                </div>
+                                <div *ngIf="editedPasswordConfirm.length >= 8">
+                                    <p *ngIf="editedPasswordConfirm.trim() === ''">Password must not be blank</p>
+                                </div>
+                            </mat-error>
+                        </mat-form-field>
+                        <div *ngIf="!passwordMatches" class="pw-match-error" style="opacity: 0.8;">
+                            Error: Passwords do not match!
+                        </div>
+
+                        <span *ngIf="editPasswordFlag" style="margin-top: 1em;">
+                            <button color="primary" mat-flat-button (click)="changePassword()" [disabled]="pw.invalid || pw2.invalid">Save</button>
+                            <button style="margin-left: 0.5em;" color="warn" mat-flat-button (click)="cancelPasswordEdit()">Cancel</button>
+                        </span>
+                    </div>
+                </div>
+            </mat-card>
+
+            <!--Delete Account-->
+            <mat-card class="delete-container">
+                <div class="delete-row-wrapper">
+                    <span class="row-caption">Delete Account</span>
+                    <p style="margin-right: 3em; width: 60%;"></p>
+                    <button mat-flat-button color="warn" class="delete-button" (click)="openDeletionDialog()">
+                        Delete
+                    </button>
+                </div>
+            </mat-card>
+        </div>
+    </mat-card>
+</div>

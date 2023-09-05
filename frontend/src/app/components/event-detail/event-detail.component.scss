@@ -1,0 +1,38 @@
+@use '@angular/material' as mat;
+
+$my-palette: mat.$indigo-palette;
+
+
+h1 {
+  top: 20%;
+}
+
+div {
+  text-align: center;
+}
+img {
+  width:50%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.demo-table {
+  width: 100%;
+}
+
+.eventImage {
+  float: right;
+}
+
+.performerList {
+  float: left;
+  width: 50%
+}
+
+button {
+  margin: auto;
+}
+
+.columnHeaders {
+  text-align: center;
+}

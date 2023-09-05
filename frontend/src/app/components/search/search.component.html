@@ -1,0 +1,429 @@
+<div style="margin: auto; width: 100%;">
+    <span *ngIf="!crop" class="select-search-box">
+        <div (click)="searchForLocation()" [ngClass]="{'currently-selected-search': searchLocation}"
+             class="select-search">
+            Search for location
+        </div>
+        <div class="select-search" (click)="searchForEvent()" [ngClass]="{'currently-selected-search': searchEvent}">
+            Search for event
+        </div>
+        <div class="select-search" (click)="searchForArtist()" [ngClass]="{'currently-selected-search': searchArtist}">
+            Search for artist
+        </div>
+        <div (click)="searchForPerformance()" [ngClass]="{'currently-selected-search': searchPerformance}"
+             class="select-search">
+            Search for performance
+        </div>
+    </span>
+
+  <mat-card *ngIf="crop" class="select-search-box-crop">
+    <mat-card-content (click)="searchForLocation()" [ngClass]="{'currently-selected-search': searchLocation}"
+                      class="select-crop"> Search for location
+    </mat-card-content>
+    <mat-card-content (click)="searchForEvent()" [ngClass]="{'currently-selected-search': searchEvent}"
+                      class="select-crop"> Search for event
+    </mat-card-content>
+    <mat-card-content (click)="searchForArtist()" [ngClass]="{'currently-selected-search': searchArtist}"
+                      class="select-crop"> Search for artist
+    </mat-card-content>
+    <mat-card-content (click)="searchForPerformance()" [ngClass]="{'currently-selected-search': searchPerformance}"
+                      class="select-crop"> Search for performance
+    </mat-card-content>
+  </mat-card>
+
+  <div *ngIf="searchLocation" class="searchCard">
+    <mat-form-field appearance="outline" class="input-field-full-width">
+      <mat-label>Name</mat-label>
+      <input (ngModelChange)="searchLocationServer($event)" [(ngModel)]="locationSearch.name" id="locationName" matInput
+             name="locationName" placeholder="Name"
+             type="text" value="{{locationSearch.name}}">
+    </mat-form-field>
+    <mat-expansion-panel style="width: 100%">
+      <mat-expansion-panel-header>
+        <mat-panel-description>
+          Advanced search options
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-form-field appearance="outline" class="input-field-half">
+        <mat-label>Street</mat-label>
+        <input (ngModelChange)="searchLocationServer($event)" [(ngModel)]="locationSearch.street" id="locationStreet"
+               matInput
+               name="locationStreet"
+               placeholder="Street" type="text" value="{{locationSearch.street}}">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-field-half">
+        <mat-label>City</mat-label>
+        <input (ngModelChange)="searchLocationServer($event)" [(ngModel)]="locationSearch.city" id="locationCity"
+               matInput
+               name="locationCity" placeholder="City"
+               type="text" value="{{locationSearch.city}}">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-field-half">
+        <mat-label>Country</mat-label>
+        <input (ngModelChange)="searchLocationServer($event)" [(ngModel)]="locationSearch.country"
+               id="locationCountry"
+               matInput
+               name="locationCountry"
+               placeholder="Country" type="text" value="{{locationSearch.country}}">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-field-half">
+        <mat-label>Postal Code</mat-label>
+        <input (ngModelChange)="searchLocationServer($event)" [(ngModel)]="locationSearch.zipCode"
+               id="locationPostalCode"
+               matInput
+               name="locationPostalCode"
+               placeholder="Postal Code" type="number" value="{{locationSearch.zipCode}}">
+      </mat-form-field>
+    </mat-expansion-panel>
+    <button (click)="clearInputAndSearch()" color="primary" mat-raised-button style="margin-top: 7px;"> Clear input
+    </button>
+  </div>
+
+
+  <div *ngIf="searchEvent" class="searchCard">
+    <mat-form-field appearance="outline" style="width: 100%">
+      <mat-label>Name</mat-label>
+      <input (ngModelChange)="searchEventServer($event)" [(ngModel)]="eventSearch.name" id="eventName" matInput
+             name="eventName"
+             placeholder="Name"
+             type="text" value="{{eventSearch.name}}">
+    </mat-form-field>
+    <mat-expansion-panel style="width: 100%">
+      <mat-expansion-panel-header>
+        <mat-panel-description>
+          Advanced search options
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-form-field appearance="outline" class="input-field-third">
+        <mat-label>Type</mat-label>
+        <mat-select (ngModelChange)="searchEventServer($event)" [(ngModel)]="eventSearch.eventType"
+                    disableOptionCentering>
+          <mat-option [value]="undefined">All</mat-option>
+          <mat-option [value]="concertType">Concert</mat-option>
+          <mat-option [value]="operaType">Opera</mat-option>
+          <mat-option [value]="festivalType">Festival</mat-option>
+          <mat-option [value]="ballType">Ball</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-field-third">
+        <mat-label>Duration</mat-label>
+        <input (ngModelChange)="searchEventServer($event)" [(ngModel)]="eventSearch.duration" id="eventDuration"
+               matInput
+               name="eventDuration"
+               placeholder="Duration" type="number" value="{{eventSearch.duration}}">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-field-third">
+        <mat-label>Tolerance</mat-label>
+        <input (ngModelChange)="searchEventServer($event)" [(ngModel)]="eventSearch.tolerance" id="eventTolerance"
+               matInput
+               name="eventTolerance"
+               placeholder="Tolerance +/-30 mins" type="number" value="{{eventSearch.tolerance}}">
+      </mat-form-field>
+    </mat-expansion-panel>
+    <button (click)="clearInputAndSearch()" color="primary" mat-raised-button style="margin-top: 7px;"> Clear input
+    </button>
+  </div>
+  <div *ngIf="searchArtist" class="searchCard">
+    <mat-form-field appearance="outline" class="input-field-third">
+      <mat-label>Artist/Band Name</mat-label>
+      <input (ngModelChange)="searchArtistServer($event)" [(ngModel)]="performerSearch.artistName" id="artistArtistName"
+             matInput name="artistArtistName"
+             placeholder="Artist/Band Name" type="text">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="input-field-third">
+      <mat-label>First Name</mat-label>
+      <input (ngModelChange)="searchArtistServer($event)" [(ngModel)]="performerSearch.firstName" id="artistFirstName"
+             matInput name="artistFirstName"
+             placeholder="First Name" type="text">
+    </mat-form-field>
+    <mat-form-field appearance="outline" class="input-field-third">
+      <mat-label>Last Name</mat-label>
+      <input (ngModelChange)="searchArtistServer($event)" [(ngModel)]="performerSearch.lastName" id="artistLastName"
+             matInput name="artistLastName"
+             placeholder="Last Name" type="text">
+    </mat-form-field>
+    <button (click)="clearInputAndSearch()" color="primary" mat-raised-button style="margin-top: 7px;"> Clear input
+    </button>
+  </div>
+  <div *ngIf="searchPerformance" class="searchCard">
+    <mat-form-field appearance="outline" class="input-field-full-width">
+      <mat-label>Performance Name</mat-label>
+      <input (ngModelChange)="searchPerformanceServer($event)" [(ngModel)]="performanceSearch.performanceName" id="performanceName"
+             matInput name="performanceName"
+             placeholder="Performance Name" type="text"
+             value="{{performanceSearch.performanceName}}">
+    </mat-form-field>
+    <mat-expansion-panel style="width: 100%">
+      <mat-expansion-panel-header>
+        <mat-panel-description>
+          Advanced search options
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-form-field appearance="outline" class="input-field-third">
+        <mat-label>Time</mat-label>
+        <input (ngModelChange)="searchPerformanceServer($event)" [(ngModel)]="performanceSearch.time" id="performanceTime"
+               matInput name="performanceTime"
+               type="datetime-local" value="{{performanceSearch.time}}">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-field-third">
+        <mat-label>Min Price</mat-label>
+        <input (ngModelChange)="searchPerformanceServer($event)" [(ngModel)]="performanceSearch.minPrice" id="performanceMinPrice"
+               matInput name="performanceMinPrice"
+               placeholder="min Price" type="number"
+               value="{{performanceSearch.minPrice}}">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-field-third">
+        <mat-label>Max Price</mat-label>
+        <input (ngModelChange)="searchPerformanceServer($event)" [(ngModel)]="performanceSearch.maxPrice" id="performanceMaxPrice"
+               matInput name="performanceMaxPrice"
+               placeholder="max Price" type="number"
+               value="{{performanceSearch.maxPrice}}">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-field-third">
+        <mat-label>Event Type</mat-label>
+        <mat-select (ngModelChange)="searchPerformanceServer($event)" [(ngModel)]="performanceSearch.eventType" disableOptionCentering>
+          <mat-option [value]="undefined">All</mat-option>
+          <mat-option [value]="concertEvent">Concert</mat-option>
+          <mat-option [value]="operaEvent">Opera</mat-option>
+          <mat-option [value]="festivalEvent">Festival</mat-option>
+          <mat-option [value]="ballEvent">Ball</mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-field-third">
+        <mat-label>Event Name</mat-label>
+        <input (ngModelChange)="searchPerformanceServer($event)" [(ngModel)]="performanceSearch.eventName" id="performanceEventName"
+               matInput name="performanceEventName"
+               placeholder="Event Name" type="text"
+               value="{{performanceSearch.eventName}}">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="input-field-third">
+        <mat-label>Hall</mat-label>
+        <input (ngModelChange)="searchPerformanceServer($event)" [(ngModel)]="performanceSearch.hallName" id="performanceHall" matInput
+               name="performanceHall"
+               placeholder="Hall" type="text" value="{{performanceSearch.hallName}}">
+      </mat-form-field>
+    </mat-expansion-panel>
+    <button (click)="clearInputAndSearch()" color="primary" mat-raised-button style="margin-top: 7px;"> Clear input
+    </button>
+  </div>
+</div>
+
+<section *ngIf="searchArtist">
+  <!-- Artist Search Results -->
+  <mat-card *ngFor="let r of performerSearchResults" class="card">
+    <mat-card-header>
+      <mat-card-title-group>
+        <mat-card-title>
+          {{r.performer.performerName}}
+        </mat-card-title>
+        <mat-card-subtitle *ngIf="r.performer.firstName !== null">
+          {{r.performer.firstName}} {{r.performer.lastName}}
+        </mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card-header>
+    <mat-card-content>
+      <mat-expansion-panel *ngFor="let e of r.events">
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{e.name}}
+          </mat-panel-title>
+          <mat-panel-description>{{e.eventType}}</mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-panel-description>
+          <div class="mat-elevation-z0 table">
+            <mat-table #table [dataSource]="e.performances" mat-table>
+
+              <!--- Note that these columns can be defined in any order.
+                    The actual rendered columns are set as a property on the row definition" -->
+
+              <!-- Location Name Column -->
+              <ng-container matColumnDef="location">
+                <mat-header-cell *matHeaderCellDef> Location</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.eventHall.location.name}} </mat-cell>
+              </ng-container>
+
+              <!-- Eventhall Name Column -->
+              <ng-container matColumnDef="eventhall">
+                <mat-header-cell *matHeaderCellDef> Hall</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{element.eventHall.name}} </mat-cell>
+              </ng-container>
+
+              <!-- StartTime Column -->
+              <ng-container matColumnDef="starttime">
+                <mat-header-cell *matHeaderCellDef> Starts at</mat-header-cell>
+                <mat-cell *matCellDef="let element"> {{toDateTimesStamp(element.startTime)}} </mat-cell>
+              </ng-container>
+
+              <!-- BuyTicket Column -->
+              <ng-container matColumnDef="buy">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let element">
+                  <button [disabled]="isInPast(element.startTime)" [routerLink]="['/performance', element.id ,'choose-spots']" mat-raised-button> Get tickets!
+                  </button>
+                </mat-cell>
+              </ng-container>
+
+              <mat-header-row *matHeaderRowDef="['location', 'eventhall', 'starttime', 'buy']"></mat-header-row>
+              <mat-row *matRowDef="let row; columns: ['location', 'eventhall', 'starttime', 'buy'];"></mat-row>
+            </mat-table>
+          </div>
+
+        </mat-panel-description>
+      </mat-expansion-panel>
+    </mat-card-content>
+  </mat-card>
+</section>
+
+<section *ngIf="searchEvent && eventSearchResults?.length !== 0">
+
+  <div class="mat-elevation-z0 table">
+    <mat-table #table [dataSource]="eventSearchResults" mat-table>
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <!-- EventType Column -->
+      <ng-container matColumnDef="type">
+        <mat-header-cell *matHeaderCellDef> Type</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.eventType}} </mat-cell>
+      </ng-container>
+
+      <!-- Duration Column -->
+      <ng-container matColumnDef="duration">
+        <mat-header-cell *matHeaderCellDef> Duration</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.duration}} min</mat-cell>
+      </ng-container>
+
+      <!-- Link Column -->
+      <ng-container matColumnDef="link">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button [routerLink]="['/event', element.id]" mat-raised-button>More Info</button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="['name', 'type', 'duration', 'link']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['name', 'type', 'duration', 'link'];"></mat-row>
+    </mat-table>
+  </div>
+</section>
+
+<section *ngIf="searchLocation && locationSearchResults?.length !== 0">
+
+  <div class="mat-elevation-z0 table">
+    <mat-table #table [dataSource]="locationSearchResults" mat-table>
+
+      <!--- Note that these columns can be defined in any order.
+            The actual rendered columns are set as a property on the row definition" -->
+
+      <!-- Location Name Column -->
+      <ng-container matColumnDef="name">
+        <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.name}} </mat-cell>
+      </ng-container>
+
+      <!-- Street Column -->
+      <ng-container matColumnDef="street">
+        <mat-header-cell *matHeaderCellDef> Street</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.street}} </mat-cell>
+      </ng-container>
+
+      <!-- City Column -->
+      <ng-container matColumnDef="city">
+        <mat-header-cell *matHeaderCellDef> City</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.city}} </mat-cell>
+      </ng-container>
+
+      <!-- Country Column -->
+      <ng-container matColumnDef="country">
+        <mat-header-cell *matHeaderCellDef> Country</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.country}} </mat-cell>
+      </ng-container>
+
+      <!-- Zip Code Column -->
+      <ng-container matColumnDef="zipcode">
+        <mat-header-cell *matHeaderCellDef> Zip Code</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.zipCode}} </mat-cell>
+      </ng-container>
+
+      <!-- Link Column -->
+      <ng-container matColumnDef="link">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button [routerLink]="['/location', element.id]" mat-raised-button>More Info</button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row *matHeaderRowDef="['name', 'street', 'city', 'country', 'zipcode', 'link']"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: ['name', 'street', 'city', 'country', 'zipcode', 'link'];"></mat-row>
+    </mat-table>
+  </div>
+</section>
+
+<section *ngIf="searchPerformance && performanceResults?.length !== 0">
+
+  <div class="mat-elevation-z0 table">
+    <mat-table #table [dataSource]="performanceResults" mat-table>
+
+      <ng-container matColumnDef="eventName">
+        <mat-header-cell *matHeaderCellDef>Event</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.eventName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="performanceName">
+        <mat-header-cell *matHeaderCellDef>Performance</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.performanceName}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="startTime">
+        <mat-header-cell *matHeaderCellDef> Start Time</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.startTime | date:'short'}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="endTime">
+        <mat-header-cell *matHeaderCellDef> End Time</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.endTime | date:'short'}} </mat-cell>
+      </ng-container>
+
+      <ng-container matColumnDef="eventType">
+        <mat-header-cell *matHeaderCellDef>Event Type</mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.eventType}} </mat-cell>
+      </ng-container>
+
+      <!-- Link Column -->
+      <ng-container matColumnDef="link">
+        <mat-header-cell *matHeaderCellDef></mat-header-cell>
+        <mat-cell *matCellDef="let element">
+          <button [routerLink]="['/performance', element.id ,'choose-spots']" mat-raised-button>Get Tickets!</button>
+        </mat-cell>
+      </ng-container>
+
+      <mat-header-row
+        *matHeaderRowDef="['eventName', 'performanceName', 'startTime', 'endTime', 'eventType', 'link']"></mat-header-row>
+      <mat-row
+        *matRowDef="let row; columns: ['eventName', 'performanceName', 'startTime', 'endTime','eventType', 'link'];"></mat-row>
+    </mat-table>
+  </div>
+</section>
+
+<section *ngIf="searchPerformance && performanceResults !== undefined && performanceResults.length === 0">
+  <p>No results found.</p>
+</section>
+
+<section *ngIf="searchEvent && eventSearchResults !== undefined && eventSearchResults.length === 0">
+  <p>No results found.</p>
+</section>
+
+<section *ngIf="searchArtist && performerSearchResults !== undefined && performerSearchResults.length === 0">
+  <p>No results found.</p>
+</section>
+
+<section *ngIf="searchLocation && locationSearchResults !== undefined && locationSearchResults.length === 0">
+  <p>No results found.</p>
+</section>

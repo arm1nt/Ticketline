@@ -1,0 +1,46 @@
+<div *ngIf="order">
+  <h1 *ngIf="order.reservationCode && order.tickets.length !== 0; else elseBlock">Reservation Successful</h1>
+  <ng-template #elseBlock><h1 *ngIf="order.time && order.tickets.length !== 0; else elseBlock2">Payment Successful</h1>
+  </ng-template>
+  <ng-template #elseBlock2><h1 *ngIf="order.tickets.length === 0">Cancellation Successful</h1></ng-template>
+
+
+  <mat-card>
+    <mat-card-title>
+      <h5>
+        You can find it in
+        <a routerLink="/orders">Order Overview</a>
+      </h5>
+    </mat-card-title>
+    <mat-card-content *ngIf="order.reservationCode">Reservation code: {{order.reservationCode}}</mat-card-content>
+    <mat-card-content *ngIf="order.dueTime">Reservation
+      due: {{order.dueTime.toString().substring(0, 10)}} {{order.dueTime.toString().substring(11, 16)}}</mat-card-content>
+    <mat-card-content *ngIf="order.total">Payment total: {{order.total}}</mat-card-content>
+    <mat-card-content *ngIf="order.time">Payment time: {{order.time.toString().substring(0, 10)}}
+      , {{order.time.toString().substring(11, 16)}}</mat-card-content>
+    <mat-list>
+      <mat-list-item>
+        <button (click)="cancelOrder();" *ngIf="order.tickets.length !== 0" color="warn" mat-raised-button>Cancel
+        </button>
+      </mat-list-item>
+      <mat-list-item *ngIf="(order.time) || (!order.time && !order.reservationCode)">
+        <button (click)=getPdf(id()) *ngIf="!order.reservationCode && order.total" mat-raised-button>Print out as PDF
+        </button>
+      </mat-list-item>
+      <mat-list-item>
+        <button (click)="getCancellation(id())" *ngIf="order.time && order.total && order.tickets.length === 0"
+                mat-raised-button> Print cancellation
+        </button>
+      </mat-list-item>
+      <mat-list-item *ngIf="order.reservationCode">
+        <button mat-raised-button (click)="buyOrder();">Purchase reserved tickets</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button color="primary" mat-raised-button routerLink="/event">Back to events</button>
+      </mat-list-item>
+      <mat-list-item>
+        <button color="primary" mat-raised-button routerLink="/news">Back to news</button>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
+</div>

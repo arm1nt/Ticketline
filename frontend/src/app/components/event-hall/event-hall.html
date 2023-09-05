@@ -1,0 +1,23 @@
+<div class="event-hall-canvas" *ngIf="layout"
+     [ngStyle]=
+       "{
+      'width': layout.eventHall.geometry.width + 'px',
+      'height': layout.eventHall.geometry.height + 'px'
+    }"
+>
+  <div [ngStyle]=
+  "{
+    'position': 'absolute',
+    'width': (layout.eventHall.geometry.width * 0.5)+ 'px',
+    'height': '50px',
+    'top': '20px',
+    'left': ((layout.eventHall.geometry.width - (layout.eventHall.geometry.width * 0.5))*0.5)+ 'px',
+    'background-color': 'lightgray',
+    'text-align': 'center'
+}">
+   <div class="event-hall-center-text">
+     Scene
+   </div>
+  </div>
+  <app-sector *ngFor="let s of layout.sectors" [sector]="s" (chosenTicketsEvent)="updateChosenTickets(s, $event)" [updatedSector]="informSectors.asObservable()"></app-sector>
+</div>

@@ -1,0 +1,20 @@
+<div class="username-container">
+  <h5>Request a password reset!</h5>
+  <p>Enter your username</p>
+  <div class="form-container">
+    <form [formGroup]="requestForm" (submit)="submit()">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput appBlankValidator formControlName="username" required>
+      </mat-form-field>
+
+      <button appDebounceClick (debounceClick)="submit()" [debounceTime]="150"
+              mat-raised-button color="primary" type="submit" [disabled]="requestForm.invalid">Request E-Mail</button>
+    </form>
+    <div *ngIf="loading" class="overlay">
+      <mat-progress-spinner mode="indeterminate" class="spinner"></mat-progress-spinner>
+    </div>
+  </div>
+
+
+</div>

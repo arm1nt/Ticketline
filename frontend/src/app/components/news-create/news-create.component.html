@@ -1,0 +1,37 @@
+<h1 class="display-1">{{heading}}</h1>
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" class="news-form">
+  <mat-form-field appearance="outline">
+    <mat-label>Title</mat-label>
+    <input #title
+           type="text"
+           [(ngModel)]="news.title"
+           matInput
+           maxlength="100"
+           name="title"
+           placeholder="A catching headline"
+           required>
+    <mat-hint align="end">{{title.value.length}}/100</mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Text</mat-label>
+    <textarea #text
+              [(ngModel)]="news.text"
+              matInput
+              maxlength="10000"
+              name="text"
+              required></textarea>
+    <mat-hint align="end">{{text.value.length}}/10000</mat-hint>
+  </mat-form-field>
+  <img src="{{news.image}}" *ngIf="hasImageUploaded()">
+  <button (click)="fileInput.click()" *ngIf="!hasImageUploaded()" mat-raised-button
+          type="button">{{uploadButtonText}}</button>
+  <button (click)="news.image = null" *ngIf="hasImageUploaded()" color="warn"
+          mat-raised-button type="button">Reset Upload
+  </button>
+  <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">
+
+  <div class="button-row">
+    <button (click)="news.image = null" color="warn" mat-raised-button type="reset">Reset Form</button>
+    <button [disabled]="!form.valid" color="primary" mat-raised-button type="submit">Publish</button>
+  </div>
+</form>

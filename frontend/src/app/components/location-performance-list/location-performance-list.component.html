@@ -1,0 +1,50 @@
+<section>
+  <h1>Performances at {{location.name}}</h1>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Details
+      </mat-panel-title>
+    </mat-expansion-panel-header>
+    <p>{{location.street}}<br>
+      {{location.zipCode}} {{location.city}}<br>
+      {{location.country}}</p>
+  </mat-expansion-panel>
+</section>
+<section>
+  <mat-table #table [dataSource]="performances" mat-table>
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef> Name</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.performanceName}} </mat-cell>
+    </ng-container>
+
+    <!-- startTime Column -->
+    <ng-container matColumnDef="startTime">
+      <mat-header-cell *matHeaderCellDef> Start Time</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{toDateTimesStamp(element.startTime)}} </mat-cell>
+    </ng-container>
+
+    <!-- endTime Column -->
+    <ng-container matColumnDef="endTime">
+      <mat-header-cell *matHeaderCellDef> End Time</mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{toDateTimesStamp(element.endTime)}} </mat-cell>
+    </ng-container>
+
+    <!-- BuyTicket Column -->
+    <ng-container matColumnDef="buy">
+      <mat-header-cell *matHeaderCellDef></mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <button [disabled]="isInPast(element.startTime)" [routerLink]="['/performance', element.id ,'choose-spots']" mat-raised-button> Get tickets!
+        </button>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="['name', 'startTime', 'endTime', 'buy']"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: ['name', 'startTime', 'endTime', 'buy'];"></mat-row>
+  </mat-table>
+</section>

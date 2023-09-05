@@ -1,0 +1,45 @@
+<div *ngIf="!createLayoutFlag">
+    <h1 *ngIf="createEventhallFlag" style="margin-top: 1em; margin-bottom: 1em;"> Create Eventhall </h1>
+
+    <mat-card class="card-wrapper">
+        <div>
+            <mat-card-content>
+                <mat-form-field appearance="outline" class="input-fields">
+                    <mat-label>Event hall name</mat-label>
+                    <input matInput type="text" appBlankValidator minlength=2 maxlength="50" [(ngModel)]="eventHallName" #hallName="ngModel">
+                    <mat-error *ngIf="hallName.invalid">
+                        <p *ngIf="eventHallName.trim() === ''"> Name must not be blank </p>
+                        <div *ngIf="!(eventHallName.trim() === '')">
+                            <div *ngIf="eventHallName.trim().length < 2; then thenblock else elseblock"></div>
+                            <ng-template #thenblock>Name must have atleast 2 characters </ng-template>
+                            <ng-template #elseblock>Invalid name</ng-template>
+                        </div>
+                    </mat-error>
+                </mat-form-field>
+                <div class="location-wrapper">
+                    <mat-form-field appearance="outline" style="width: 60%;">
+                        <mat-label>Locations</mat-label>
+                        <mat-select [(ngModel)]="selectedLocation">
+                            <mat-option *ngFor="let loc1 of locations" [value]="loc1">
+                                {{loc1.name}}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-icon class="add-button" (click)="createNewLocation()">add_circle_outline</mat-icon>
+                </div>
+            </mat-card-content>
+
+            <app-location-detail [location]="selectedLocation" [enterEditMode]="createLocationFlag" (finishedEditing)="finishedEditingParent()" (updatedLocations)="childAddedLocation()"></app-location-detail>
+        </div>
+    </mat-card>
+
+    <div class="continue-to-layout-button-wrapper">
+        <button [disabled]="hallName.invalid || selectedLocation === undefined" mat-flat-button color="primary" (click)="goToCreateLayout()">Continue to layout <mat-icon style="background-color: transparent; transform: scale(0.5); margin-bottom: 0.1em;" (click)="goToCreateLayout()">arrow_forward_ios</mat-icon></button>
+    </div>
+</div>
+
+
+
+
+<app-create-floorplan [generalEventHallInformation]="eventHallInformation" *ngIf="createLayoutFlag"></app-create-floorplan>

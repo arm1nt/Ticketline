@@ -1,0 +1,42 @@
+<h1 class="display-1">Top 10 Events {{eType}}</h1>
+<mat-form-field appearance="outline">
+  <mat-label>Event Type</mat-label>
+  <mat-select  name="eventType"  placeholder="Event Type">
+    <mat-option (click)="selectEventType('')" [value]="'All'">All Event Types</mat-option>
+    <mat-option (click)="selectEventType('CONCERT')" [value]="'Concert'">Concert</mat-option>
+    <mat-option (click)="selectEventType('FESTIVAL')" [value]="'Festival'">Festival</mat-option>
+    <mat-option (click)="selectEventType('OPERA')" [value]="'Opera'">Opera</mat-option>
+    <mat-option (click)="selectEventType('BALL')" [value]="'Ball'">Ball</mat-option>
+
+<!--
+    <mat-option  *ngFor="let eventType of availableEventTypes" (click)="selectEventType2(eventType)" [value]="eType">{{eventType}}</mat-option>
+-->
+
+  </mat-select>
+</mat-form-field>
+<div class="container py-5">
+    <div class="col-4">
+      <canvas id="myChart"></canvas>
+      <h3 class="text-center mt-3">Top 10 Events</h3>
+    </div>
+</div>
+
+<mat-card *ngFor="let event of events; let indexOfElements = index" class="card">
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title>
+        {{rankings[indexOfElements]}} {{event.name}}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{event.eventType}}
+      </mat-card-subtitle>
+    </mat-card-title-group>
+  </mat-card-header>
+  <img *ngIf="event.image" alt="" mat-card-image src="{{event.image}}">
+  <mat-card-content >
+
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-button [routerLink]="['/event', event.id]" mat-raised-button color="accent">Detail View</button>
+  </mat-card-actions>
+</mat-card>

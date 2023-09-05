@@ -1,0 +1,31 @@
+<div class="top-row">
+  <h1 class="display-1"> Events</h1>
+  <button *ngIf="isAdmin()" [routerLink]="'/event/create'" color="primary" mat-raised-button>Create Event</button>
+  <button [routerLink]="'/event/top10'" color="secondary" mat-raised-button>Top 10</button>
+</div>
+<div class="content-wrapper">
+  <mat-card *ngFor="let event of events" class="card">
+    <mat-card-header class="event-header">
+      <mat-card-title-group>
+        <mat-card-title>
+          {{event.name}}
+        </mat-card-title>
+        <mat-card-subtitle>
+          {{event.eventType}}
+        </mat-card-subtitle>
+      </mat-card-title-group>
+    </mat-card-header>
+    <img *ngIf="event.image" alt="" mat-card-image src="{{event.image}}">
+    <mat-card-content>
+      <strong class="artists">Artists:</strong> {{toStringList(event.performers)}}
+    </mat-card-content>
+    <mat-card-actions class="detail-view-wrapper">
+      <button mat-button [routerLink]="[event.id]" mat-flat-button>Detail View</button>
+    </mat-card-actions>
+  </mat-card>
+  <mat-paginator [length]="numberOfEvents" [pageSize]="pageSize" (page)="nextPage($event)" style="width: 100%; max-width: 800px"></mat-paginator>
+
+</div>
+
+
+

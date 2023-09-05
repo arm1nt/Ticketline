@@ -1,0 +1,130 @@
+<div>
+    <h1 *ngIf="inputEventHall === undefined" class="title">Create new floorplan for {{generalEventHallInformation.name}}</h1>
+    <h1 *ngIf="inputEventHall !== undefined" class="title">Add floorplan to {{generalEventHallInformation.name}}</h1>
+
+    <mat-card class="choose-name">
+        <mat-card-content>
+            <p>Please choose a name for the layout: </p>
+            <mat-form-field appearance="outline" style="width: 100%;">
+                <mat-label>Set name</mat-label>
+                <input matInput type="text" appBlankValidator minlength=2 maxlength="50" [(ngModel)]="layoutName" #layoutName1="ngModel">
+                <mat-error *ngIf="layoutName1.invalid">
+                    <p *ngIf="layoutName.trim() === ''"> Name must not be blank </p>
+                    <div *ngIf="!(layoutName.trim() === '')">
+                        <div *ngIf="layoutName.trim().length < 2; then thenblock else elseblock"></div>
+                        <ng-template #thenblock>Name must have atleast 2 characters </ng-template>
+                        <ng-template #elseblock>Invalid name</ng-template>
+                    </div>
+                </mat-error>
+            </mat-form-field>
+        </mat-card-content>
+    </mat-card>
+
+    <button [disabled]="createNewSector" mat-flat-button color="primary" class="new-sector-button" (click)="createSector()">Create new sector</button>
+
+    <div *ngIf="createNewSector" class="sector-input-wrapper">
+        <mat-form-field appearance="outline">
+            <mat-label>Sector type</mat-label>
+            <mat-select [(value)]="creationSectorType">
+                <mat-option *ngFor="let type of sectorTypes" value="{{type}}">
+                    {{type}}
+                </mat-option>
+            </mat-select>
+        </mat-form-field>
+        <br>
+        <mat-form-field appearance="outline">
+            <mat-label>Sector price</mat-label>
+            <input type="number" matInput placeholder="i.e. 20€" [(ngModel)]="creationSectorPrice">
+        </mat-form-field>
+        <br>
+        <div>
+            <button  [disabled]="creationSectorType === '' || creationSectorPrice === null" mat-flat-button color="primary" style="margin-right: 0.5em;" (click)="addSector()">Add</button>
+            <button mat-flat-button color="warn" (click)="cancelCreatingSector()">Cancel</button>
+        </div>
+    </div>
+
+    <!--Sector overview-->
+    <div class="sector-overview-wrapper">
+        <mat-accordion *ngIf="!(sectors.length === 0)">
+            <mat-expansion-panel id="expansionPanel"  hideToggle [expanded]="true" (opened)="panelOpenState = true" (closed)="panelOpenState = false">
+                <mat-expansion-panel-header>
+                    <mat-panel-title>
+                        Selected sector:
+                    </mat-panel-title>
+                    <mat-panel-description>
+                        '{{sectors[currentlySelectedSector].type}}'' of price {{sectors[currentlySelectedSector].price}} €
+
+                        <input readonly class="sector-color-input"
+                            [(colorPicker)]="colors[currentlySelectedSector]" [style.background]="colors[currentlySelectedSector]"
+                            (click)="showColor($event)"
+                            (colorPickerClose)="closeColorPicker($event)"
+                            (colorPickerOpen)="openColorPicker()"/>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="horizontal-scroll">
+                    <div *ngFor="let sector of sectors;">
+                        <div class="sector-class-selection">
+                            <h5> Sector {{sector.id}}</h5>
+
+                            <div><span>Type:</span>{{sector.type}}</div>
+                            <div><span>Price:</span>{{sector.price}} €</div>
+
+                            <button mat-flat-button color="accent" (click)="selectSector(sector.id)">Use this sector</button>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
+    </div>
+
+    <div *ngIf="sectors.length === 0">
+        <h3>Please add at least one sector</h3>
+    </div>
+</div>
+
+
+<div class="floorplan-settings">
+    <div>
+        <mat-slide-toggle [disabled]="sectors.length === 0" (toggleChange)="flipped()" style="margin-bottom: 0.5em;">{{(makeSectors) ? "Draw Sectors" : "Choose spots"}}</mat-slide-toggle>
+        <button mat-flat-button *ngIf="inputEventHall !== undefined" class="help-button" (click)="openDescription()">Help</button>
+    </div>
+
+
+    <div *ngIf="inputEventHall === undefined" class="column-row-wrapper">
+        <div class="colum-button-group">
+            <button class="primaryColorButton remove-column-row-button" (click)="removeColumn()">-</button>
+            <button class="colorButton column-row-button">Column</button>
+            <button class="primaryColorButton add-column-row-button" (click)="addColumn()">+</button>
+        </div>
+        <div class="row-button-group">
+            <button class="primaryColorButton remove-column-row-button" (click)="removeRow()">-</button>
+            <button class="colorButton column-row-button">Row</button>
+            <button class="primaryColorButton add-column-row-button" (click)="addRow()">+</button>
+        </div>
+        <div class="help-button-wrapper">
+            <mat-icon (click)="openDescription()">help_outline</mat-icon>
+        </div>
+    </div>
+</div>
+
+<svg #svg id="floorplan-canvas" (mousedown)="onMouseDown($event)" (mousemove)="onMouseMove($event)" (mouseup)="onMouseUp($event)" [attr.height]="svgHeight" [attr.width]="svgWidth" style="border: 1px solid black; z-index: 0;">
+    <g cdkDrag cdkDragLockAxis="x" (click)="clickOnScene($event)" (mousedown)="clickOnScene($event)" (mouseup)="clickOnScene($event)">
+
+        <rect id="scene" x="112" y="20" height="50px" width="325" class="scene-rect"></rect>
+    </g>
+
+    <svg *ngFor="let row of places">
+        <polygon *ngFor="let place of row" class="spot"  [attr.id]="place.id" [attr.points]="place.polygonPoints"  [attr.fill]="(place.selected) ? 'lightgray' : 'white'" style="stroke: black; stroke-width:4px; position: relative; z-index: 10;" (click)="chooseSpot(place.id, $event)"></polygon>
+    </svg>
+</svg>
+<br>
+<button mat-flat-button color="primary" class="remove-all-sectors" (click)="removeAllSectors()"> Remove all sectors </button>
+<button mat-flat-button color="primary" class="select-all-spots" (click)="markAllSpotsAsChosen()">Select all spots</button>
+<button mat-flat-button color="primary" class="unselect-all-spots" (click)="markAllSpotsAsFree()">Unselect all spots</button>
+
+<br/>
+<br/>
+<br/>
+<button mat-flat-button color="primary" (click)="checkIfLayoutNameExists()" [disabled]="layoutName1.invalid">Submit layout</button>
+
+

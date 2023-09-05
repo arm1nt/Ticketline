@@ -1,0 +1,87 @@
+<h1 class="display-1">Edit order</h1>
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title>
+      {{event.name}} at {{performance.performanceName}} starting on {{toTimesStampSubtitle(performance.startTime)}}
+      <!--{{dateAsLocalDateString(o.event.startDate)}} - {{o.event.artist.name}}
+      - {{o.event.venue.name}}-->
+    </mat-card-title>
+    <mat-card-subtitle>
+      <p *ngIf="(order.id !== null)">{{'Invoice number: ' + order.id}}</p>
+      <p *ngIf="order.time !== null && order.tickets.length > 0">{{'Bought on ' + toTimesStampSubtitle(order.time)}}</p>
+      <p *ngIf="order.time !== null && order.tickets.length === 0">{{'Cancelled on ' + toTimesStampSubtitle(order.time)}}</p>
+      <p *ngIf="(order.reservationCode !== null)">Reservation Code: <b>{{order.reservationCode}}</b></p>
+      <p *ngIf="!order.time && !order.reservationCode && order.tickets.length === 0">This reservation has been cancelled.</p>
+      <p *ngIf="(order.dueTime !== null)">Buy your tickets until {{toTimesStampSubtitle(order.dueTime)}} or they will be
+        cancelled!</p>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content [ngClass]="{'inactive' : isInPast(performance.startTime)}">
+    <mat-card-content>
+      <div class="mat-elevation-z0">
+        <mat-table #table [dataSource]="dataSource">
+
+          <!-- Checkbox Column -->
+          <ng-container matColumnDef="select">
+            <mat-header-cell *matHeaderCellDef>
+              <mat-checkbox (change)="$event ? masterToggle() : null"
+                            [checked]="selection.hasValue() && isAllSelected()"
+                            [indeterminate]="selection.hasValue() && !isAllSelected()">
+              </mat-checkbox>
+            </mat-header-cell>
+            <mat-cell *matCellDef="let row">
+              <mat-checkbox (change)="$event ? selection.toggle(row) : null"
+                            (click)="$event.stopPropagation()"
+                            [checked]="selection.isSelected(row)">
+              </mat-checkbox>
+            </mat-cell>
+          </ng-container>
+
+          <!-- Ticket Column -->
+          <ng-container matColumnDef="ticketId">
+            <mat-header-cell *matHeaderCellDef> Ticket</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.ticketId}} </mat-cell>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="ticketStatus">
+            <mat-header-cell *matHeaderCellDef> Status</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.ticketStatus}} </mat-cell>
+          </ng-container>
+
+          <!-- Price Column -->
+          <ng-container matColumnDef="price">
+            <mat-header-cell *matHeaderCellDef> Price</mat-header-cell>
+            <mat-cell *matCellDef="let element"> {{element.price}} </mat-cell>
+          </ng-container>
+
+          <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+          <mat-row (click)="selection.toggle(row)"
+                   *matRowDef="let row; columns: displayedColumns;">
+          </mat-row>
+        </mat-table>
+      </div>
+
+    </mat-card-content>
+  </mat-card-content>
+  <mat-card-header>
+    <mat-card-subtitle *ngIf="order.total">{{order.tickets.length}} ticket{{(order.tickets.length > 1 ? 's' : '')}}
+      which
+      total{{(order.tickets.length === 1 ? 's' : '')}} {{order.total}}€
+    </mat-card-subtitle>
+    <mat-card-subtitle *ngIf="!order.total">{{order.tickets.length}} ticket{{(order.tickets.length > 1 ? 's' : '')}}
+      reserved
+    </mat-card-subtitle>
+  </mat-card-header>
+  <div class="button-row">
+    <button (click)="openPurchaseDialog()"
+            *ngIf="selection.selected.length > 0 && allTicketsReserved(selection.selected) && !isInPast(performance.startTime)"
+            color="accent" mat-raised-button>Purchase selected Tickets
+    </button>
+    <button (click)="openCancelDialog()" *ngIf="selection.selected.length > 0 && !isInPast(performance.startTime)"
+            color="warn" mat-raised-button>Cancel selected Tickets
+    </button>
+  </div>
+</mat-card>
+
+

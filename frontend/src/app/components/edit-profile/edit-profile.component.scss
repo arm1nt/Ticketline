@@ -1,0 +1,336 @@
+@use '@angular/material' as mat;
+
+$my-palette-indigo: mat.define-palette(mat.$indigo-palette);
+$my-palette-pink: mat.define-palette(mat.$pink-palette);
+
+
+.profile-card {
+    margin-top: 1rem;
+    size: 1em;
+}
+
+.style-profile {
+    color: mat.get-color-from-palette($my-palette-indigo, default);
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: center;
+    padding: 2em;
+}
+
+.profile-icon {
+    transform: scale(4);
+}
+
+.profile-item-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+
+.profile-item {
+    max-width: 70%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    //border-bottom: 1px solid black;
+}
+
+.profile-item-crop-text {
+    max-width: 350px;
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.pw-match-error {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    background-color: #f44336;
+    color: white;
+    padding: 1em;
+    border-radius: 1em;
+}
+
+.wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.wrapper>mat-card {
+  width: 100%;
+  max-width: 55em;
+  padding: 2em;
+  border-radius: 0;
+}
+
+.settings-container {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.header {
+  width: 100%;
+  text-align: center;
+  margin-bottom: 4em;
+}
+
+.mat-card-style {
+  border-radius: 0;
+  width: 100%;
+}
+
+.edit-button {
+  width: 10%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 0.2em;
+}
+
+.row-caption {
+  width: 20%;
+  margin-right: 0.5em;
+  font-weight: 500;
+}
+
+.password-row-caption {
+  width: 20%;
+  margin-right: 1em;
+  font-weight: 500;
+}
+
+.address-row-caption {
+  width: 20%;
+  margin-right: 0.5em;
+  font-weight: 500;
+}
+
+.username-row-wrapper {
+  display: flex;
+  flex-direction: row;
+  padding-top: 1em;
+  padding-bottom: 0.2em;
+}
+
+.first-last-name-address-row-wrapper {
+  display: flex;
+  flex-direction: row;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+.email-container {
+  border-radius: 0;
+  width: 100%;
+  margin-top: 2.5em;
+}
+
+.email-row-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.address-container {
+  border-radius: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.password-row-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.password-container {
+  border-radius: 0;
+  width: 100%;
+  margin-top: 2.5em;
+}
+
+.delete-container {
+  border-radius: 0;
+  width: 100%;
+}
+
+.delete-row-wrapper {
+  display: flex;
+  flex-direction: row;
+}
+
+.username-firstname-lastname-email-address-content-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  width: 70%;
+}
+
+.username-firstname-lastname-email-password-content-edit-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  width: 80%;
+}
+
+.password-wrapper {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  width: 80%;
+}
+
+.password-wrapper:first-child {
+  margin-right: 0.5em;
+}
+
+
+.username-firstname-lastname-address-content {
+  font-size: 1.5em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.email-content {
+  font-size: 1.5em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  display: block;
+}
+
+.username-email-address-extra-info {
+  margin-top: 0.5em;
+  font-size: 0.8em;
+  color: gray;
+}
+
+.edit-button div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.address-info-wrapper {
+  font-size: 1em;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.cursor-setting-pointer {
+  cursor: pointer;
+}
+
+.change-password-link {
+  cursor: pointer;
+  color: blue;
+}
+
+.indent {
+  width: 3%;
+}
+
+.delete-button {
+  width: 20%;
+  height: 3em;
+  margin-right: 1em;
+}
+
+.address-row-container {
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 0.7em;
+}
+
+.no-address-added-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  justify-content: flex-start;
+  width: 50%;
+}
+
+@media (max-width: 500px) {
+  #increase-pw-security {
+    display: none;
+  }
+
+  .change-password-link {
+    margin-left: 0.1em;
+  }
+
+  .username-row-wrapper {
+    flex-direction: column;
+  }
+
+  .first-last-name-address-row-wrapper {
+    flex-direction: column;
+  }
+
+  .row-caption {
+    width: 100%;
+    text-align: center;
+  }
+
+  .username-firstname-lastname-email-address-content-wrapper {
+    width: 100%;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .username-firstname-lastname-email-password-content-edit-wrapper {
+    align-items: center;
+    width: 100%;
+  }
+
+  .edit-button {
+    width: 100%;
+    text-align: center;
+  }
+
+  .password-row-caption {
+    width: fit-content;
+  }
+
+  .password-row-wrapper {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .address-edit-row {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .email-row-wrapper {
+    flex-direction: column;
+  }
+  .delete-row-wrapper {
+    flex-direction: column;
+    align-items: center;
+  }
+  .delete-button {
+    margin-right: 0;
+    text-align: center;
+  }
+}

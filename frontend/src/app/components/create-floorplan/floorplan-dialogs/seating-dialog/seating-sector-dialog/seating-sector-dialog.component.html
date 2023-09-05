@@ -1,0 +1,20 @@
+<div *ngIf="data" class="wrapper">
+    <div>
+        <div class="header-section">
+            <h1> Edit sector {{data.id}}</h1>
+            <mat-icon class="fa-trash1" style="cursor: pointer;" (click)="onDeleteClick()">delete</mat-icon>
+        </div>
+        <div class="price-section">
+            <p>Change price of selected sector:</p>
+            <mat-form-field appearance="outline">
+                <mat-label>Set price</mat-label>
+                <input matInput type="number" [(ngModel)]="data.price">
+            </mat-form-field>
+        </div>
+        <br>
+    </div>
+    <div class="cancel-save-wrapper">
+        <button mat-flat-button color="accent" (click)="onCancelClick()"> Cancel</button>
+        <button mat-flat-button color="primary" (click)="onSaveClick()"> Save Changes </button>
+    </div>
+</div>

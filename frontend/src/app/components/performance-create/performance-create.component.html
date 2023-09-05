@@ -1,0 +1,78 @@
+<h1 class="display-1">{{heading}}</h1>
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" class="performance-form">
+  <mat-form-field appearance="outline" *ngIf="toEvent">
+    <mat-label>Event</mat-label>
+    <input #event
+           type="text"
+           [(ngModel)]="eventname"
+           matInput
+           disabled
+           name="eventInput"
+           required>
+  </mat-form-field>
+  <mat-form-field appearance="outline" *ngIf="!toEvent">
+    <mat-select [(ngModel)]="this.performance.eventId" name="eventSelect" placeholder="Event" required>
+      <mat-option *ngFor="let e of availableEvents" [value]="e.id">
+        {{e.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-select (valueChange)="loadEventHalls($event);" [(ngModel)]="this.performance.locationId" name="locationSelect"
+                placeholder="Location"
+                required>
+      <mat-option *ngFor="let l of availableLocations" [value]="l.id">
+        {{l.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-select (valueChange)="loadLayouts($event);" [(ngModel)]="this.performance.eventhallId"
+                [disabled]="this.performance.locationId === null" name="eventHallSelect"
+                placeholder="Eventhall" required>
+      <mat-option *ngFor="let eh of availableEventHalls" [value]="eh.id">
+        {{eh.name}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline">
+    <mat-label>Layout</mat-label>
+    <mat-select [(ngModel)]="this.performance.layoutId" [disabled]="this.performance.eventhallId === null" name="layout"
+                placeholder="Layout" required>
+      <mat-option *ngFor="let l of availableLayouts" [value]="l.id">
+        {{l.name}}
+      </mat-option>
+    </mat-select>
+
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input #performanceName
+           type="text"
+           [(ngModel)]="performance.performanceName"
+           matInput
+           name="performanceName"
+           required>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Starting Time</mat-label>
+    <input #startTime
+           [(ngModel)]="performance.startTime"
+           matInput
+           name="startTime"
+           required
+           [disabled]="!this.performance.eventId"
+           pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}"
+           type="datetime-local">
+  </mat-form-field>
+
+  <div class="button-row">
+    <button (click)="resetForm()" color="warn" mat-raised-button type="reset">Reset Form</button>
+    <button [disabled]="!form.valid" color="primary" mat-raised-button type="submit">Create</button>
+  </div>
+</form>
+
+

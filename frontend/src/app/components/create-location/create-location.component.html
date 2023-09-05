@@ -1,0 +1,78 @@
+<h1 class="header">Add new Location!</h1>
+
+
+<mat-card class="wrapper">
+    <mat-card-content>
+        <div class="input-wrapper">
+            <mat-form-field class="location-row" appearance="outline">
+                <mat-label>Location name</mat-label>
+                <input type="text" appBlankValidator minlength=2 maxlength="50" matInput [(ngModel)]="locationName" #locName="ngModel">
+                <mat-error *ngIf="locName.invalid">
+                    <p *ngIf="locationName.trim() === ''"> Name must not be blank </p>
+                    <div *ngIf="!(locationName.trim() === '')">
+                        <div *ngIf="locationName.trim().length < 2; then thenblock else elseblock"></div>
+                        <ng-template #thenblock>Name must have atleast 2 characters </ng-template>
+                        <ng-template #elseblock>Invalid name</ng-template>
+                    </div>
+                </mat-error>
+            </mat-form-field>
+            <div class="row">
+                <mat-form-field appearance="outline" class="input-field">
+                    <mat-label>Country</mat-label>
+                    <input type="text" appBlankValidator minlength=2 maxlength="50" matInput [(ngModel)]="locationCountry" #locCountry="ngModel">
+                    <mat-error *ngIf="locCountry.invalid">
+                        <p *ngIf="locationCountry.trim() === ''"> Country must not be blank </p>
+                        <div *ngIf="!(locationCountry.trim() === '')">
+                            <div *ngIf="locationCountry.trim().length < 2; then thenblock else elseblock"></div>
+                            <ng-template #thenblock>Country must have atleast 2 characters </ng-template>
+                            <ng-template #elseblock>Invalid Country</ng-template>
+                        </div>
+                    </mat-error>
+                </mat-form-field>
+                <span class="separator"></span>
+                <mat-form-field appearance="outline" class="input-field">
+                    <mat-label>City</mat-label>
+                    <input matInput type="text" appBlankValidator minlength=2 maxlength="50" [(ngModel)]="locationCity" #locCity="ngModel">
+                    <mat-error *ngIf="locCity.invalid">
+                        <p *ngIf="locationCity.trim() === ''"> City must not be blank </p>
+                        <div *ngIf="!(locationCity.trim() === '')">
+                            <div *ngIf="locationCity.trim().length < 2; then thenblock else elseblock"></div>
+                            <ng-template #thenblock>City must have atleast 2 characters </ng-template>
+                            <ng-template #elseblock>Invalid City name</ng-template>
+                        </div>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="row">
+                <mat-form-field appearance="outline" class="input-field">
+                    <mat-label>Street</mat-label>
+                    <input matInput type="text" appBlankValidator minlength=2 maxlength="50" [(ngModel)]="locationStreet" #locStreet="ngModel">
+                    <mat-error *ngIf="locStreet.invalid">
+                        <p *ngIf="locationStreet.trim() === ''"> Street must not be blank </p>
+                        <div *ngIf="!(locationStreet.trim() === '')">
+                            <div *ngIf="locationStreet.trim().length < 2; then thenblock else elseblock"></div>
+                            <ng-template #thenblock>Street must have atleast 2 characters </ng-template>
+                            <ng-template #elseblock>Invalid Street</ng-template>
+                        </div>
+                    </mat-error>
+                </mat-form-field>
+                <span class="separator"></span>
+                <mat-form-field appearance="outline" class="input-field">
+                    <mat-label>ZipCode</mat-label>
+                    <input matInput type="text" appBlankValidator minlength=2 maxlength="50" [(ngModel)]="locationZipCode" #locZip="ngModel">
+                    <mat-error *ngIf="locZip.invalid">
+                        <p *ngIf="locationZipCode.trim() === ''"> ZipCode must not be blank </p>
+                        <div *ngIf="!(locationZipCode.trim() === '')">
+                            <div *ngIf="locationZipCode.trim().length < 2; then thenblock else elseblock"></div>
+                            <ng-template #thenblock>ZipCode must have atleast 2 characters </ng-template>
+                            <ng-template #elseblock>Invalid ZipCode</ng-template>
+                        </div>
+                    </mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <button [disabled]="locName.invalid || locCountry.invalid ||
+        locCity.invalid || locStreet.invalid || locZip.invalid" mat-flat-button color="primary" (click)="createLocation()">Create Location</button>
+    </mat-card-content>
+</mat-card>

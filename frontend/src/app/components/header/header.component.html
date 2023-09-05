@@ -1,0 +1,58 @@
+<mat-toolbar color="primary">
+  <a routerLink="" class="header-style"> Ticketline </a>
+
+  <a *ngIf="!crop" routerLink="/news" class="nav-field"> News</a>
+  <a *ngIf="!crop" routerLink="/orders" class="nav-field"> Orders</a>
+  <a *ngIf="!crop" routerLink="/event" class="nav-field"> Events</a>
+  <a *ngIf="!crop" routerLink="/search" class="nav-field">Search</a>
+  <a *ngIf="!crop && (authService.getUserRole() === 'ADMIN') && (authService.isLoggedIn())" class="nav-field" (click)="openAdminPanel()"> Admin Panel</a>
+
+  <span class="example-spacer"></span>
+
+  <a *ngIf="!authService.isLoggedIn() && !crop" routerLink="/login" routerLinkActive="active">
+    <button class="login-logout-style"> Login </button>
+  </a>
+  <a *ngIf="!authService.isLoggedIn() && !crop" routerLink="/register">
+    <button class="register-style"> Register </button>
+  </a>
+
+  <span *ngIf="authService.isLoggedIn()">
+    <a routerLink="/profile">
+      <button class="account-button-wrapper">
+        <mat-icon class="account-button">account_circle</mat-icon>
+      </button>
+    </a>
+
+  </span>
+  <a *ngIf="authService.isLoggedIn() && !crop" routerLink="/">
+    <button class="login-logout-style" (click)="authService.logoutUser()" > Logout </button>
+  </a>
+
+
+  <span *ngIf="crop && expand">
+    <button style="background-color: transparent; border: none;" disabled>
+      <mat-icon class="menu-icon" (click)="expandCroppedView()"> menu </mat-icon>
+    </button>
+  </span>
+  <span *ngIf="crop && !expand">
+    <button style="background-color: transparent; border: none;" disabled>
+      <mat-icon class="menu-icon" (click)="expandCroppedView()"> menu </mat-icon>
+    </button>
+  </span>
+</mat-toolbar>
+
+<div *ngIf="crop && expand" class="expanded-header">
+  <a routerLink="/news" class="nav-field-expanded" (click)="hideExpandedView()">News</a>
+  <br>
+  <a routerLink="/orders" class="nav-field-expanded" (click)="hideExpandedView()">Orders</a>
+  <br>
+  <a routerLink="/event" class="nav-field-expanded" (click)="hideExpandedView()">Events</a>
+  <br>
+  <a routerLink="/search" class="nav-field-expanded" (click)="hideExpandedView()">Search</a>
+  <br>
+  <a *ngIf="authService.getUserRole() === 'ADMIN' && authService.isLoggedIn()" class="nav-field-expanded" (click)="openAdminPanel()">Admin Panel<br></a>
+
+  <a *ngIf="authService.isLoggedIn()" routerLink="/" (click)="logoutAndHideExpandedView()" class="nav-field-expanded" > Logout <br></a>
+  <a *ngIf="!authService.isLoggedIn()" routerLink="/login" routerLinkActive="active" class="nav-field-expanded" (click)="hideExpandedView()"> Login <br></a>
+  <a *ngIf="!authService.isLoggedIn()" routerLink="/" class="nav-field-expanded" (click)="hideExpandedView()"> Register </a>
+</div>

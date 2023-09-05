@@ -1,0 +1,19 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title-group>
+      <mat-card-title>
+        {{news.title}}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{toTimesStampSubtitle(news.publishedAt)}}
+      </mat-card-subtitle>
+    </mat-card-title-group>
+  </mat-card-header>
+  <img *ngIf="news.image" mat-card-image src="{{news.image}}">
+  <mat-card-content>
+    {{news.text}}
+  </mat-card-content>
+  <mat-card-actions>
+    <button [routerLink]="'/news'" mat-button>Back to news</button>
+  </mat-card-actions>
+</mat-card>

@@ -1,0 +1,34 @@
+@use '@angular/material' as mat;
+@import "src/styles";
+
+.seat-wrapper {
+  // !Important for proper drawing of the child seats!
+  position: relative;
+  width: 34px;
+  height: 46px;
+}
+
+.seat-wrapper-wrapper {
+  flex-basis: 46px;
+}
+
+.seat-legend-wrapper {
+  text-align: left;
+  color: mat.get-color-from-palette($my-palette, 500);
+  margin-bottom: 0.5rem;
+}
+
+.seat-legend-wrapper > * {
+  margin-bottom: 0.5rem;
+}
+
+.seat-legend-wrapper > div {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.seat-legend-header {
+  text-align: center;
+}

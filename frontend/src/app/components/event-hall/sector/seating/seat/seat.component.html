@@ -1,0 +1,46 @@
+<div
+  [ngStyle]=
+    "{
+      'left': seat.geometry.x + 'px',
+      'top': seat.geometry.y - seat.geometry.legSpaceDepth + 'px'
+    }"
+  class="seat"
+>
+  <svg [attr.width]="this.borderWidth + seat.geometry.width"
+       [attr.height]="this.borderWidth + seat.geometry.height + seat.geometry.legSpaceDepth"
+       (click)="chooseThisSeat()"
+       [ngClass]="{'seat-clickable': seatClickable(this.seat)}"
+       class="seat-svg"
+  >
+    <polygon
+      [attr.points]=
+        "
+        (this.borderWidth / 2) + ', ' +
+        (this.borderWidth / 2 + seat.geometry.legSpaceDepth) + ', ' +
+        (this.borderWidth / 2 + seat.geometry.width / 2) + ', ' +
+        (this.borderWidth / 2) + ', ' +
+        (this.borderWidth / 2 + seat.geometry.width) + ', ' +
+        (this.borderWidth / 2 + seat.geometry.legSpaceDepth) + ', ' +
+        (this.borderWidth / 2 + seat.geometry.width) + ', ' +
+        (this.borderWidth / 2 + seat.geometry.legSpaceDepth + seat.geometry.height) + ', ' +
+        (this.borderWidth / 2) + ', ' +
+        (this.borderWidth / 2 + seat.geometry.legSpaceDepth + seat.geometry.height) + ', '
+        "
+      [ngStyle]=
+        "{
+          'stroke-width': this.borderWidth,
+          'fill': this.getSeatColor()
+        }"
+      class="seat-polygon"/>
+  </svg>
+  <span
+    [ngStyle]=
+        "
+        {'padding-top': seat.geometry.legSpaceDepth - (this.borderWidth / 2) + 'px'}
+        "
+    (click)="chooseThisSeat()"
+    [ngClass]="{'seat-clickable': seatClickable(this.seat)}"
+    class="seat-id">
+    {{seat.seatId}}
+  </span>
+</div>

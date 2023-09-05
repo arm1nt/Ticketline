@@ -1,0 +1,49 @@
+.wrapper {
+  padding: 1em;
+}
+
+.header {
+  text-align: center;
+}
+
+.content-wrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+span {
+  width: 10%;
+}
+
+.location-row {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+
+
+@media(max-width: 1000px) {
+  .location-row {
+    flex-direction: column;
+  }
+
+  .button-wrapper {
+    flex-direction: column;
+  }
+
+  .button-wrapper>button {
+    margin-bottom: 0.75em;
+  }
+
+}

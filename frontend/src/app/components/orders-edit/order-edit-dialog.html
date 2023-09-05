@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>{{data.action[0].toUpperCase() + data.action.substring(1)}} tickets</h1>
+<div mat-dialog-content>
+  Do you want to {{data.action}} {{data.tickets.length}} tickets?
+
+  <p *ngIf="data.action === 'cancel'">
+    Cancelled tickets will be up for sale to anyone.
+  </p>
+  <p *ngIf="data.action === 'purchase'">
+    The total is {{calcTicketTotal()}}€.<br>
+    All unselected tickets will be up for sale to anyone.
+  </p>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>No</button>
+  <button [mat-dialog-close]="true" cdkFocusInitial color="warn" mat-button>Ok</button>
+</div>

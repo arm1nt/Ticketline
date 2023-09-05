@@ -1,0 +1,25 @@
+<div class="choose-places-wrapper-wrapper">
+  <div class="choose-places-wrapper" *ngIf="event">
+    <h2 class="choose-places-h2">{{event.name}} - {{performance.performanceName}}</h2>
+    <h3 *ngIf="eventhall">{{eventhall.name}}</h3>
+    <h4 *ngIf="eventhall">{{eventhall.location.name}}</h4>
+    <p>Plan of the venue</p>
+    <app-event-hall (chosenTicketsEvent)="newTicketsChosen($event)"
+                    (sectorsWithTicketsEvent)="newSectorsWithTicketsChosen($event)" *ngIf="performance"
+    [layout]="layout" [performanceId]="id"
+    [checkSelectedSeatsAndSelectedTickets]="updateSeatChart.asObservable()"></app-event-hall>
+    <p class="choose-places-choose-text">Choose your places</p>
+    <div class="choose-places-buttons-wrapper" [ngClass]="{'choose-places-hide-button': hideButtons()}">
+      <button (click)="buyOrReserve(false)" [disabled]="isAfter30MinutesBefore(performance.startTime)"
+              class="choose-places-button" color="primary" mat-raised-button>Reserve chosen places
+      </button>
+      <button (click)="buyOrReserve(true)" class="choose-places-button" color="primary" mat-raised-button>Buy ticket for chosen
+        places
+      </button>
+    </div>
+  </div>
+  <div class="choose-places-order-overview-wrapper">
+    <app-ticket-overview class="choose-spots-ticket-overview" [chosenTickets]="sectorsWithTickets"></app-ticket-overview>
+    <app-seat-legend class="choose-places-seat-legend"></app-seat-legend>
+  </div>
+</div>

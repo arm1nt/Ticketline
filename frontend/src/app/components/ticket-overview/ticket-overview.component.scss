@@ -1,0 +1,24 @@
+.ticket-overview-wrapper {
+  border: 2px solid lightgray;
+  padding: 10px;
+}
+
+.ticket-overview-sector-heading {
+  text-align: left;
+  font-weight: bold;
+}
+
+.ticket-overview-hr {
+  margin-top: 0.25rem;
+}
+
+.ticket-overview-flex-column {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+}
+
+.ticket-overview-flex-auto {
+  flex: auto;
+  text-align: left;
+}

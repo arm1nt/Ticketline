@@ -1,0 +1,14 @@
+<div mat-dialog-content class="dialog-choose-spots-row">
+  <p>How many spots would you like to pick in this sector<!-- {{data.sectorName}} --> ?</p>
+  <p>Available spots: <strong>{{data.freeSpots}}</strong></p>
+  <mat-form-field appearance="outline">
+    <mat-label>Pick spots in sector</mat-label>
+    <input matInput type="number" min="0" id="chosenSpots" [max]="data.freeSpots" [(ngModel)]="data.selectedSpots">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button color="primary" [mat-dialog-close]="this.oldSelectedSpots">Cancel selection</button>
+  <button mat-button color="warn" [mat-dialog-close]="0">Remove all chosen spots in sector</button>
+  <button [mat-dialog-close]="data.selectedSpots" cdkFocusInitial color="primary" mat-button>Pick spots in sector
+  </button>
+</div>

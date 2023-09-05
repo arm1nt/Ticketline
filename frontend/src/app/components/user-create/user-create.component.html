@@ -1,0 +1,100 @@
+<div class="register-container">
+  <h5>Create a new user</h5>
+  <div class="form-container">
+    <form [formGroup]="createUserForm" (submit)="submit()">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>First Name</mat-label>
+        <input matInput appBlankValidator formControlName="firstName" required>
+        <mat-error *ngIf="createUserForm.controls.firstName.touched && createUserForm.controls.firstName.invalid">
+          <span *ngIf="createUserForm.controls.firstName.errors.required">This field is mandatory.</span>
+          <span *ngIf="createUserForm.controls.firstName.errors.minlength
+           || createUserForm.controls.firstName.errors.maxlength">First Name should be between 2 and 100 characters long.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Last Name</mat-label>
+        <input matInput appBlankValidator formControlName="lastName" required>
+        <mat-error *ngIf="createUserForm.controls.lastName.touched && createUserForm.controls.lastName.invalid">
+          <span *ngIf="createUserForm.controls.lastName.errors.required">This field is mandatory.</span>
+          <span *ngIf="createUserForm.controls.lastName.errors.minlength
+           || createUserForm.controls.lastName.errors.maxlength">Last Name should be between 2 and 100 characters long.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Role</mat-label>
+        <mat-select formControlName="admin" required>
+          <mat-option [value]="false">Customer</mat-option>
+          <mat-option [value]="true">Admin</mat-option>
+        </mat-select>
+        <mat-error *ngIf="createUserForm.controls.admin.touched && createUserForm.controls.admin.invalid">
+          <span *ngIf="createUserForm.controls.admin.errors.required">This field is mandatory.</span>
+        </mat-error>
+      </mat-form-field>
+
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>E-Mail</mat-label>
+        <input matInput appBlankValidator appEmailValidator formControlName="email" required>
+        <mat-error *ngIf="createUserForm.controls.email.touched && createUserForm.controls.email.invalid">
+          <span *ngIf="createUserForm.controls.email.errors.required">This field is mandatory.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput appBlankValidator formControlName="username" required>
+        <mat-error *ngIf="createUserForm.controls.username.touched && createUserForm.controls.username.invalid">
+          <span *ngIf="createUserForm.controls.username.errors.required">This field is mandatory.</span>
+          <span *ngIf="createUserForm.controls.username.errors.minlength
+           || createUserForm.controls.username.errors.maxlength">Username should be between 2 and 50 characters long.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Country</mat-label>
+        <input matInput appBlankValidator formControlName="country" required>
+        <mat-error *ngIf="createUserForm.controls.country.touched && createUserForm.controls.country.invalid">
+          <span *ngIf="createUserForm.controls.country.errors.required">This field is mandatory.</span>
+          <span *ngIf="createUserForm.controls.country.errors.minlength
+           || createUserForm.controls.country.errors.maxlength">Country should be between 2 and 100 characters long.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>City</mat-label>
+        <input matInput appBlankValidator formControlName="city" required>
+        <mat-error *ngIf="createUserForm.controls.city.touched && createUserForm.controls.city.invalid">
+          <span *ngIf="createUserForm.controls.city.errors.required">This field is mandatory.</span>
+          <span *ngIf="createUserForm.controls.city.errors.minlength
+           || createUserForm.controls.city.errors.maxlength">City should be between 2 and 100 characters long.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Street</mat-label>
+        <input matInput appBlankValidator formControlName="street" required>
+        <mat-error *ngIf="createUserForm.controls.street.touched && createUserForm.controls.street.invalid">
+          <span *ngIf="createUserForm.controls.street.errors.required">This field is mandatory.</span>
+          <span *ngIf="createUserForm.controls.street.errors.minlength
+           || createUserForm.controls.street.errors.maxlength">Street should be between 2 and 100 characters long.</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label>Zip Code</mat-label>
+        <input matInput appBlankValidator formControlName="zipCode" required>
+        <mat-error *ngIf="createUserForm.controls.zipCode.touched && createUserForm.controls.zipCode.invalid">
+          <span *ngIf="createUserForm.controls.zipCode.errors.required">This field is mandatory.</span>
+          <span *ngIf="createUserForm.controls.zipCode.errors.minlength
+           || createUserForm.controls.zipCode.errors.maxlength">Zip Code should be between 2 and 100 characters long.</span>
+        </mat-error>
+      </mat-form-field>
+
+
+
+      <button appDebounceClick (debounceClick)="submit()" [debounceTime]="700" mat-raised-button color="primary" type="submit" [disabled]="createUserForm.invalid">Register</button>
+    </form>
+  </div>
+</div>

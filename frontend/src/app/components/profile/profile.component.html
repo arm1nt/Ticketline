@@ -1,0 +1,203 @@
+<div *ngIf="loaded" class="wrapper">
+    <mat-card>
+        <div>
+            <mat-card-content class="profile-container">
+                <mat-icon class="profile-icon">account_circle</mat-icon>
+            </mat-card-content>
+            <mat-card-content class="profile-header">
+                <h3> Profile </h3>
+            </mat-card-content>
+
+
+            <mat-card *ngIf="!crop" class="content-container">
+
+
+                <mat-card-content class="section-header">
+                    Personal
+                </mat-card-content>
+
+                <div class="content-row">
+                    <div class="content-item">
+                        <mat-card-content class="item-description">First Name:</mat-card-content>
+                        <div class="profile-item">
+                            <div class="profile-item-crop-text">
+                                {{user.firstName}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-item">
+                            <mat-card-content class="item-description">Last Name:</mat-card-content>
+                            <mat-card-content class="profile-item">
+                                <mat-card-content class="profile-item-crop-text" style="width: 100%;">
+                                    {{user.lastName}}
+                                </mat-card-content>
+                            </mat-card-content>
+                    </div>
+                </div>
+
+                <div class="content-row">
+                    <div class="content-item">
+                        <mat-card-content class="profile-item-label item-description">Username:</mat-card-content>
+                        <mat-card-content class="profile-item">
+                            <mat-card-content class="profile-item-crop-text">
+                                {{user.username}}
+                            </mat-card-content>
+                        </mat-card-content>
+                    </div>
+                    <div class="content-item">
+                            <mat-card-content class="item-description">Email:</mat-card-content>
+                            <mat-card-content class="profile-item">
+                                <mat-card-content class="profile-item-crop-text" style="width: 100%;">
+                                    {{user.email}}
+                                </mat-card-content>
+                            </mat-card-content>
+                    </div>
+                </div>
+
+                <mat-card-content class="section-header-address">
+                    Address
+                </mat-card-content>
+
+
+
+
+                <div class="content-row">
+                    <div class="content-item">
+                        <mat-card-content class="profile-item-label item-description">Country:</mat-card-content>
+                        <mat-card-content class="profile-item">
+                            <mat-card-content class="profile-item-crop-text">
+                                {{(user.country === null) ? "n.a." : user.country}}
+                            </mat-card-content>
+                        </mat-card-content>
+                    </div>
+                    <div class="content-item">
+                            <mat-card-content class="item-description">City:</mat-card-content>
+                            <mat-card-content class="profile-item">
+                                <mat-card-content class="profile-item-crop-text" style="width: 100%;">
+                                    {{(user.city === null) ? "n.a." : user.city}}
+                                </mat-card-content>
+                            </mat-card-content>
+                    </div>
+                </div>
+
+
+                <div class="content-row">
+                    <div class="content-item">
+                        <mat-card-content class="item-description">Zip-Code:</mat-card-content>
+                        <mat-card-content class="profile-item">
+                            <mat-card-content class="profile-item-crop-text">
+                                {{(user.zipCode === null) ? "n.a." : user.zipCode}}
+                            </mat-card-content>
+                        </mat-card-content>
+                    </div>
+                    <div class="content-item">
+                            <mat-card-content class="item-description">Street</mat-card-content>
+                            <mat-card-content class="profile-item">
+                                <mat-card-content class="profile-item-crop-text" style="width: 100%;">
+                                    {{(user.street === null) ? "n.a." : user.street}}
+                                </mat-card-content>
+                            </mat-card-content>
+                    </div>
+                </div>
+            </mat-card>
+
+            <mat-card *ngIf="crop" class="content-container-cropped">
+
+
+                <mat-card-content class="section-header-cropped">
+                    Personal
+                </mat-card-content>
+
+                <div class="content-row-cropped">
+                    <div class="content-item-cropped">
+                        <mat-card-content class="item-description-cropped">First Name:</mat-card-content>
+                        <div class="profile-item" style="width: 75%;">
+                            <div class="profile-item-crop-text" style="font-size: 1.1em;">
+                                {{user.firstName}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="content-item-cropped">
+                            <mat-card-content class="item-description-cropped">Last Name:</mat-card-content>
+                            <mat-card-content class="profile-item" style="width: 75%;">
+                                <mat-card-content class="profile-item-crop-text" style="width: 100%;">
+                                    {{user.lastName}}
+                                </mat-card-content>
+                            </mat-card-content>
+                    </div>
+                </div>
+
+                <div class="content-row-cropped">
+                    <div class="content-item-cropped">
+                        <mat-card-content class="profile-item-label item-description-cropped">Username:</mat-card-content>
+                        <mat-card-content class="profile-item" style="width: 75%;">
+                            <mat-card-content class="profile-item-crop-text">
+                                {{user.username}}
+                            </mat-card-content>
+                        </mat-card-content>
+                    </div>
+                    <div class="content-item-cropped">
+                            <mat-card-content class="item-description-cropped">Email:</mat-card-content>
+                            <mat-card-content class="profile-item" style="width: 75%;">
+                                <mat-card-content class="profile-item-crop-text" style="width: 100%;">
+                                    {{user.email}}
+                                </mat-card-content>
+                            </mat-card-content>
+                    </div>
+                </div>
+
+                <mat-card-content class="section-header-address-cropped">
+                    Address
+                </mat-card-content>
+
+                <div class="content-row-cropped">
+                    <div class="content-item-cropped">
+                        <mat-card-content class="profile-item-label item-description-cropped">Country:</mat-card-content>
+                        <mat-card-content class="profile-item" style="width: 75%;">
+                            <mat-card-content class="profile-item-crop-text">
+                                {{(user.country === null) ? "n.a." : user.country}}
+                            </mat-card-content>
+                        </mat-card-content>
+                    </div>
+                    <div class="content-item-cropped">
+                            <mat-card-content class="item-description-cropped">City:</mat-card-content>
+                            <mat-card-content class="profile-item" style="width: 75%;">
+                                <mat-card-content class="profile-item-crop-text" style="width: 100%;">
+                                    {{(user.city === null) ? "n.a." : user.city}}
+                                </mat-card-content>
+                            </mat-card-content>
+                    </div>
+                </div>
+
+                <div class="content-row-cropped">
+                    <div class="content-item-cropped">
+                        <mat-card-content class="profile-item-label item-description-cropped">Zip-Code:</mat-card-content>
+                        <mat-card-content class="profile-item" style="width: 75%;">
+                            <mat-card-content class="profile-item-crop-text">
+                                {{(user.zipCode === null) ? "n.a." : user.zipCode}}
+                            </mat-card-content>
+                        </mat-card-content>
+                    </div>
+                    <div class="content-item-cropped">
+                            <mat-card-content class="item-description-cropped">Address:</mat-card-content>
+                            <mat-card-content class="profile-item" style="width: 75%;">
+                                <mat-card-content class="profile-item-crop-text" style="width: 100%;">
+                                    {{(user.street === null) ? "n.a." : user.street}}
+                                </mat-card-content>
+                            </mat-card-content>
+                    </div>
+                </div>
+            </mat-card>
+
+            <div class="edit-button-container">
+                <div>
+                    <a routerLink="/edit" class="editDeleteButton">
+                        <button  mat-raised-button color="primary">
+                            Edit
+                        </button>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </mat-card>
+</div>

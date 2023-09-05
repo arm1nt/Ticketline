@@ -1,0 +1,89 @@
+<h1 class="display-1"> Orders</h1>
+<mat-card *ngFor="let o of orders" class="card">
+  <mat-card-header>
+    <mat-card-title>
+      <h4>{{o.eventName}}</h4>
+      <h5>{{o.performanceName}}</h5>
+      <h6>{{o.locationName}} - {{o.eventHallName}}</h6>
+      <h6>Starting on {{toTimesStamp(o.performanceStartTime)}}</h6>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <p *ngIf="(o.id !== null)">{{'Invoice number: ' + o.id}}</p>
+      <p *ngIf="o.time !== null && o.tickets.length > 0">{{'Bought on ' + toTimesStamp(o.time)}}</p>
+      <p *ngIf="o.time !== null && o.tickets.length === 0">{{'Cancelled on ' + toTimesStamp(o.time)}}</p>
+      <p *ngIf="(o.reservationCode !== null)">Reservation Code: <b>{{o.reservationCode}}</b></p>
+      <p *ngIf="!o.time && !o.reservationCode && o.tickets.length === 0">This reservation has been cancelled.</p>
+      <p *ngIf="(o.dueTime !== null)">Buy your tickets until {{toTimesStamp(o.dueTime)}} or they will be
+        cancelled!</p>
+    </mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content [ngClass]="{'inactive' : isInPast(o.performanceStartTime)}">
+    <mat-expansion-panel *ngIf="o.tickets.length !== 0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Tickets
+        </mat-panel-title>
+        <mat-panel-description *ngIf="o.total">{{o.tickets.length}} ticket{{(o.tickets.length > 1 ? 's' : '')}} which
+          total{{(o.tickets.length === 1 ? 's' : '')}} {{o.total}}€
+        </mat-panel-description>
+        <mat-panel-description *ngIf="!o.total">{{o.tickets.length}} ticket{{(o.tickets.length > 1 ? 's' : '')}}
+          reserved
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <mat-panel-description>
+        <table [dataSource]="o.tickets" class="mat-elevation-z1" mat-table>
+          <!-- Ticket Column -->
+          <ng-container matColumnDef="ticketId">
+            <th *matHeaderCellDef mat-header-cell> Ticket</th>
+            <td *matCellDef="let element" mat-cell> {{element.ticketId}}</td>
+          </ng-container>
+
+          <!-- Status Column -->
+          <ng-container matColumnDef="ticketStatus">
+            <th *matHeaderCellDef mat-header-cell> Status</th>
+            <td *matCellDef="let element" mat-cell> {{element.ticketStatus}} </td>
+          </ng-container>
+
+          <!-- Price Column -->
+          <ng-container matColumnDef="price">
+            <th *matHeaderCellDef mat-header-cell> Price</th>
+            <td *matCellDef="let element" mat-cell>
+              <span *ngIf="o.reservationCode === null || o.reservationCode === undefined"
+                    style="display: flex; flex-direction: row; justify-content: space-between;">
+                {{element.price}}€<span (click)="downloadTicketPdf(element.id)" class="material-icons"
+                                        style="cursor: pointer">download</span>
+              </span>
+              <span *ngIf="o.reservationCode !== null && o.reservationCode !== undefined"
+                    style="display: flex; flex-direction: row; justify-content: space-between;">
+                {{element.price}}€
+              </span>
+
+            </td>
+          </ng-container>
+
+
+          <tr *matHeaderRowDef="displayedColumns" mat-header-row></tr>
+          <tr *matRowDef="let row; columns: displayedColumns;" mat-row></tr>
+        </table>
+      </mat-panel-description>
+    </mat-expansion-panel>
+  </mat-card-content>
+  <div class="button-row">
+    <button *ngIf="!isInPast(o.performanceStartTime) && o.tickets.length > 0" [routerLink]="'/orders/' + o.id" color="primary"
+            mat-raised-button>
+      Edit order
+    </button>
+    <button (click)=getPdf(o.id) *ngIf="!o.reservationCode && o.total" mat-raised-button>Download invoice as PDF</button>
+    <button (click)="getCancellation(o.id)" *ngIf="o.time && o.total && o.tickets.length === 0" mat-raised-button>Download
+      cancellation invoice as PDF
+    </button>
+  </div>
+</mat-card>
+
+<mat-card *ngIf="orders.length === 0" class="card">
+  <mat-card-title>You have no orders with us yet!</mat-card-title>
+  <mat-card-content>Please check out the events.</mat-card-content>
+  <mat-card-actions>
+    <button [routerLink]="'/event'" mat-raised-button>Go to upcoming events</button>
+  </mat-card-actions>
+</mat-card>

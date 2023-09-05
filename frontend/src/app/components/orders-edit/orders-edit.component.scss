@@ -1,0 +1,27 @@
+.order-card {
+  margin: 1rem;
+}
+
+button {
+  margin-right: 1rem;
+}
+
+.inactive {
+  opacity: 0.6;
+}
+
+.card {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  max-width: 75%;
+}
+
+.mat-table {
+  overflow: auto;
+  width: 100%;
+}
+
+.mat-column-select {
+  width: 50px;
+  overflow: visible;
+}

@@ -1,0 +1,36 @@
+<div>
+  <h1>{{event.name}}</h1>
+
+  <h5>{{event.eventType}}</h5>
+  <mat-list class="performerList">
+    <mat-list-item><h4>Performers</h4></mat-list-item>
+    <mat-list-item *ngFor="let performer of event.performers" >{{performer.performerName}}</mat-list-item>
+  </mat-list>
+  <h6></h6>
+  <img mat-card-image *ngIf="event.image" src="{{event.image}}" class="eventImage" width="400" alt="">
+
+  <table mat-table [dataSource]="event.performances" class="demo-table">
+    <ng-container matColumnDef="performanceName">
+      <th mat-header-cell *matHeaderCellDef class="columnHeaders">Name</th>
+      <td mat-cell *matCellDef="let performance">{{performance.performanceName}}</td>
+    </ng-container>
+    <ng-container matColumnDef="startTime">
+      <th mat-header-cell *matHeaderCellDef class="columnHeaders">Starting Time</th>
+      <td mat-cell *matCellDef="let performance">{{toDateTimesStamp(performance.startTime)}}</td>
+    </ng-container>
+    <ng-container matColumnDef="endTime">
+      <th mat-header-cell *matHeaderCellDef class="columnHeaders">End Time</th>
+      <td mat-cell *matCellDef="let performance">{{toDateTimesStamp(performance.endTime)}}</td>
+    </ng-container>
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="columnHeaders"></th>
+      <td mat-cell *matCellDef="let performance">
+        <button [disabled]="isInPast(performance.startTime)" routerLink="/performance/{{performance.id}}/choose-spots"  mat-raised-button color="primary">Reserve or Buy tickets</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;" ></tr>
+  </table>
+</div>
+

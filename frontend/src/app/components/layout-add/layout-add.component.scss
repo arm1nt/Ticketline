@@ -1,0 +1,33 @@
+.header {
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.content {
+  width: 100%;
+}
+
+.right-side-of-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.selection {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+  font-size: 1.5em;
+}
+
+.continue-button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.continue-button-wrapper button {
+  margin-top: 1em
+}

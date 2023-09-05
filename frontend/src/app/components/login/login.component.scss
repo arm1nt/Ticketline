@@ -1,0 +1,31 @@
+.snackbar-error {
+  background-color: #f44336;
+  color: white;
+}
+
+.forgot-password {
+  color: blue;
+}
+
+.forgot-password:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.wrapper {
+  max-width: 50em;
+  margin: 10% auto auto;
+}
+
+
+mat-form-field {
+  width: 100%;
+}
+
+.login-header {
+  font-size: 1.3em;
+}
+
+.warn {
+  color: orange;
+}

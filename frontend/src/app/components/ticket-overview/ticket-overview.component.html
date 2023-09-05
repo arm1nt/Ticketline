@@ -1,0 +1,24 @@
+<div class="ticket-overview-wrapper">
+<h3>Order overview</h3>
+<div>
+  <div *ngFor="let sectorTickets of chosenTickets | keyvalue">
+    <div *ngIf="sectorTickets.value.length">
+    <div class="ticket-overview-sector-heading">Sector {{sectorTickets.key.sectorId}} ({{isSeating(sectorTickets.key) ? 'Seating' : 'Standing'}})</div>
+    <hr class="ticket-overview-hr">
+    <div *ngIf="sectorTickets.value" class="ticket-overview-flex-column">
+      <div>{{sectorTickets.value.length}}x</div>
+      <div class="ticket-overview-flex-auto">{{isSeating(sectorTickets.key) ? 'Seating' : 'Standing'}} Ticket{{sectorTickets.value.length === 1 ? '' : 's'}}</div>
+      <div>{{sectorTickets.value.length}}x{{sectorTickets.key.price}}€</div>
+    </div>
+      <hr class="ticket-overview-hr">
+    </div>
+  </div>
+  <div *ngIf="!noTicketSelected()">
+    <div class="ticket-overview-flex-column">
+      <div class="ticket-overview-flex-auto">Total sum:</div>
+      <div>{{this.getTotalSum()}}€</div>
+    </div>
+  </div>
+  <p *ngIf="noTicketSelected()">No tickets have been selected</p>
+</div>
+</div>

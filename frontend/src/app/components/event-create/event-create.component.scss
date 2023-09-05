@@ -1,0 +1,46 @@
+.event-form {
+  display: flex;
+  flex-direction: column;
+  width: 75%;
+}
+
+button {
+  margin: 8px 8px 8px 8px;
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.demo-table {
+  width: 100%;
+}
+
+.mat-column-startTime {
+  padding-right: 16px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.mat-column-performanceName {
+  padding-right: 16px;
+  font-size: 20px;
+  text-align: center;
+}
+
+.mat-column-endTime {
+  padding-left: 16px;
+  padding-right: 16px;
+  font-size: 20px;
+}
+
+.mat-column-layout {
+  padding-left: 16px;
+  font-size: 20px;
+}
+
+
+
+

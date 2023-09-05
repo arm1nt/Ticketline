@@ -1,0 +1,121 @@
+@use '@angular/material' as mat;
+
+$my-palette-indigo: mat.define-palette(mat.$indigo-palette);
+$my-palette-pink: mat.define-palette(mat.$pink-palette);
+
+.toolbar-style {
+    background-color: mat.get-color-from-palette($my-palette-indigo, default);
+    overflow: hidden;
+}
+
+.header-style {
+    color: white;
+    font-weight: 500;
+    font-size: 1.5em;
+    text-decoration: none;
+}
+
+.nav-field {
+    margin-left: 1.1em;
+    padding: 0.3em;
+    color: white;
+    text-decoration: none;
+    font-size: 0.95em;
+    cursor: pointer;
+}
+
+.nav-field:hover {
+    transform: scale(1.02);
+    border-radius: 0.2em;
+}
+
+.nav-field-expanded {
+    margin-top: 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 1.3em;
+    cursor: pointer;
+}
+
+.expanded-header {
+  background-color: mat.get-color-from-palette($my-palette-indigo, 400);
+  text-align: center;
+}
+
+.example-spacer {
+    flex: 1 1 auto;
+}
+
+.login-logout-style {
+    color: white;
+    text-decoration: none;
+    background-color: mat.get-color-from-palette($my-palette-indigo, default);;
+    border: none;
+  padding: 0.2em 0.5em;
+}
+
+.register-style {
+    color: white;
+    text-decoration: none;
+    background-color: mat.get-color-from-palette($my-palette-indigo, default);;
+    border: none;
+  padding: 0.2em 0.5em;
+}
+
+.login-logout-style:hover {
+    transform: scale(1.1);
+    background-color: mat.get-color-from-palette($my-palette-indigo, 700);
+    border-radius: 5px;
+}
+
+.register-style:hover {
+    transform: scale(1.1);
+    background-color: mat.get-color-from-palette($my-palette-indigo, 700);
+    border-radius: 5px;
+}
+
+.menu-icon {
+  margin-top: 0.4em;
+  color: white;
+  transform: scale(1.3);
+  cursor: pointer;
+}
+
+.reorder-icon {
+  color:white;
+}
+
+.account-button-wrapper {
+  background: transparent;
+  border: none;
+  margin-right: 0.6em;
+}
+
+.account-button {
+  margin-top: 0.4em;
+  color: white;
+  transform: scale(1.3);
+  cursor: pointer;
+}
+
+
+.admin-settings {
+    color: white;
+    margin-right: 2em;
+    transform: scale(1.15);
+}
+
+.admin-settings:hover {
+    opacity: 1;
+    animation: shakeMake 0.2s linear;
+}
+
+@keyframes shakeMake {
+    0% {
+        transform: rotate(15deg) scale(1.25);
+    }
+
+    50% {
+        transform: rotate(-15deg) scale(1.25);;
+    }
+}

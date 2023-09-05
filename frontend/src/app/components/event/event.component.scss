@@ -1,0 +1,63 @@
+.event-card {
+  margin: 1rem;
+}
+
+.card {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  max-width: 800px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  box-shadow: 1px 1px 1px 1.5px lightgray;
+}
+
+.event-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.detail-view-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+.artists {
+  margin-left: 2.5em;
+}
+
+.detail-view-wrapper>button {
+  background: cornflowerblue;
+  color: white;
+  width: 20%;
+  min-width: fit-content;
+}
+
+button {
+  margin-right: 1rem;
+}
+
+button {
+  margin: 8px 8px 8px 8px;
+}
+
+img {
+  height: 200px;
+  width: 90%;
+  object-fit: cover;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.content-wrapper {
+  width: 80%;
+}
+
+@media (max-width: 600px) {
+  .content-wrapper {
+    margin: auto;
+  }
+}

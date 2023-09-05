@@ -1,0 +1,86 @@
+<h1 class="display-1">{{heading}}</h1>
+<form #form="ngForm" (ngSubmit)="onSubmit(form)" *ngIf="eventCreationStage === eventCreation.creatingEvent"
+      class="event-form">
+  <mat-form-field appearance="outline">
+    <mat-label>Name</mat-label>
+    <input #name
+           type="text"
+           [(ngModel)]="event.name"
+           matInput
+           maxlength="255"
+           name="name"
+           placeholder="Event name"
+           required>
+    <mat-hint align="end">{{name.value.length}}/255</mat-hint>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Event Type</mat-label>
+    <mat-select [(ngModel)]="event.eventType" name="eventType" placeholder="Event Type" required>
+      <mat-option *ngFor="let eventType of availableEventTypes" [value]="eventType">{{eventType}}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Duration in min</mat-label>
+    <input [(ngModel)]="event.duration"
+           [max]="10000"
+           [min]="1"
+           matInput
+           name="duration"
+           placeholder="Event duration in minutes"
+           required
+           type="number">
+  </mat-form-field>
+  <mat-form-field appearance="outline">
+    <mat-label>Performers</mat-label>
+    <mat-select [(ngModel)]="event.performers" name="performers" required multiple placeholder="Performers">
+      <mat-option *ngFor="let performer of availablePerformers | async" [value]="performer">
+        {{performer.performerName}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <img src="{{event.image}}" *ngIf="hasImageUploaded()">
+  <button (click)="fileInput.click()" *ngIf="!hasImageUploaded()" mat-raised-button
+          type="button">{{uploadButtonText}}</button>
+  <button (click)="event.image=null" *ngIf="hasImageUploaded()" color="warn" mat-raised-button type="button">Reset
+    Upload
+  </button>
+  <input hidden (change)="onFileSelected()" #fileInput type="file" id="file">
+
+  <div class="button-row">
+    <button (click)="resetForm()" color="warn" mat-raised-button type="reset">Reset Form</button>
+    <button [disabled]="!form.valid" color="primary" mat-raised-button type="submit">Create</button>
+  </div>
+</form>
+
+<button (click)="eventCreationStage = eventCreation.performanceCreate"
+        *ngIf="eventCreationStage===eventCreation.performanceOverview" color="primary" mat-raised-button>Add Performance
+</button>
+
+
+<app-performance-create (close)="showOverviewPage()" *ngIf="eventCreationStage===eventCreation.performanceCreate" [event]="event"
+                        [toEvent]=true></app-performance-create>
+
+
+<table mat-table [dataSource]="event.performances" *ngIf="eventCreationStage===eventCreation.performanceOverview">
+  <ng-container matColumnDef="performanceName">
+    <th mat-header-cell *matHeaderCellDef>Name</th>
+    <td mat-cell *matCellDef="let performance">{{performance.performanceName}}</td>
+  </ng-container>
+  <ng-container matColumnDef="startTime">
+    <th mat-header-cell *matHeaderCellDef>Starting Time</th>
+    <td mat-cell *matCellDef="let performance">{{toDateTimesStamp(performance.startTime)}}</td>
+  </ng-container>
+  <ng-container matColumnDef="endTime">
+    <th mat-header-cell *matHeaderCellDef>End Time</th>
+    <td mat-cell *matCellDef="let performance">{{toDateTimesStamp(performance.endTime)}}</td>
+  </ng-container>
+  <ng-container matColumnDef="layout">
+    <th mat-header-cell *matHeaderCellDef>Layout</th>
+    <td *matCellDef="let performance" mat-cell>{{layoutMap.get(performance.layoutId).name}}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>
+
+

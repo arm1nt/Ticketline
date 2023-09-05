@@ -1,0 +1,54 @@
+<div style="width: 100%; height: 100%;">
+
+    <div style="width: 100%; display: flex; flex-direction: row; justify-content: space-between; border-bottom: 1px solid black; font-size: xx-large;">
+        <span style="font-weight: 500; margin-left: 31.5%;">Admin Panel</span>
+        <span class="material-icons" style="transform: scale(1.2); cursor: pointer; height: 40%;" (click)="dialogRef.close()">close</span>
+    </div>
+
+    <div class="group-features">
+        <div class="group-headline"><strong>News</strong></div>
+
+        <button mat-flat-button color="primary" class="feature-button" (click)="closeAndReroute(2)">
+            <span >Create News</span>
+        </button>
+    </div>
+
+    <div class="group-features">
+        <div class="group-headline"><strong>Venue and Layout</strong></div>
+        <button mat-flat-button color="primary" class="feature-button" (click)="closeAndReroute(3)">
+            <span>Create Location</span>
+        </button>
+        <button mat-flat-button color="primary" class="feature-button" (click)="closeAndReroute(4)">
+            <span>Create Venue</span>
+        </button>
+        <button mat-flat-button color="primary" class="feature-button" (click)="closeAndReroute(5)">
+            <span>Add Layout</span>
+        </button>
+    </div>
+
+    <div class="group-features">
+        <div class="group-headline"><strong>Performance and Performer</strong></div>
+        <button mat-flat-button color="primary" class="feature-button" (click)="closeAndReroute(6)">
+            <span>Create Event</span>
+        </button>
+        <button mat-flat-button color="primary" class="feature-button" (click)="closeAndReroute(7)">
+            <span>Add Performance</span>
+        </button>
+        <button mat-flat-button color="primary" class="feature-button" (click)="closeAndReroute(8)">
+            <span>Add Performers</span>
+        </button>
+    </div>
+
+    <div class="group-features">
+        <div class="group-headline"><strong>User Administration</strong></div>
+        <button mat-flat-button color="primary" class="feature-button" (click)="closeAndReroute(1)">
+            <span>Create new user</span>
+        </button>
+        <button mat-flat-button color="primary" class="feature-button" (click)="closeAndReroute(9)">
+            <span>View locked accounts</span>
+        </button>
+        <button mat-flat-button color="primary" class="feature-button" (click)="closeAndReroute(10)"> 
+            <span>View all non-locked customers</span>
+        </button>
+    </div>
+</div>

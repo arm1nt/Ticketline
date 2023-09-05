@@ -1,0 +1,30 @@
+@use '@angular/material' as mat;
+
+$my-palette-indigo: mat.define-palette(mat.$indigo-palette);
+$my-palette-pink: mat.define-palette(mat.$pink-palette);
+
+.standing-wrapper {
+  position: absolute;
+  text-align: center;
+}
+
+.standing-count-positioning {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.add-button {
+  background-color: mat.get-color-from-palette($my-palette-pink, 400);
+  color: white;
+  cursor: pointer;
+}
+
+.disabled-button {
+  background-color: lightgray;
+  opacity: 0.85;
+  color: white;
+  cursor: default;
+  pointer-events: none;
+  user-select: none;
+}

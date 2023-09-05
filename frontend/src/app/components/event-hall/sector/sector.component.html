@@ -1,0 +1,10 @@
+<div class="sector-wrapper" [ngStyle]="{
+'left': sector.geometry.x + 'px',
+'top': sector.geometry.y + 'px',
+'width': sector.geometry.width + 'px',
+'height': sector.geometry.height + 'px',
+'background-color': sector.color
+}" >
+</div>
+<app-standing *ngIf="isStanding()" [standing]="getStanding()" (chosenTicketsEvent)="choseTickets($event)" [getUpdatedSector]="informChildSector.asObservable()"></app-standing>
+<app-seating *ngIf="isSeating()" [seating]="getSeating()" (chosenTicketsEvent)="choseTickets($event)" [getUpdatedSector]="informChildSector.asObservable()"></app-seating>

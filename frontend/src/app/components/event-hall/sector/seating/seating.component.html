@@ -1,0 +1,9 @@
+<div class="seating-row-number" *ngFor="let r of this.seating.rows">
+  <div *ngIf="r.geometry.y >= 0" class="seating-row-number-position" [ngStyle]="{
+  'left': r.geometry.x + 'px',
+  'top': r.geometry.y + 'px'
+  }">
+    {{r.rowNumber}}
+  </div>
+  <app-seat *ngFor="let s of r.seats" [seat]="s" (chosenEvent)="choseMe(s)"></app-seat>
+</div>

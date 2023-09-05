@@ -1,0 +1,88 @@
+@use '@angular/material' as mat;
+
+$my-palette-indigo: mat.define-palette(mat.$indigo-palette);
+$my-palette-pink: mat.define-palette(mat.$pink-palette);
+
+
+.chip {
+    color: white;
+    background-color: mat.get-color-from-palette($my-palette-indigo, default);
+}
+
+.card-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.card-wrapper>div {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.card-wrapper>div>mat-card-content {
+  width: 70%;
+  display: flex;
+  flex-direction: column;
+}
+
+.location-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
+
+.continue-to-layout-button-wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 2em;
+}
+
+.continue-to-layout-button-wrapper button {
+  width: 12em;
+  text-align: center;
+}
+
+.add-button {
+  margin-top: 0.8em;
+  margin-left: 0.5em;
+  cursor: pointer;
+}
+
+.input-fields {
+  width: 60%;
+
+}
+
+app-location-detail {
+  width: 50%;
+}
+
+@media (max-width: 600px) {
+
+  .card-wrapper {
+    justify-content: center;
+  }
+
+  .card-wrapper>div {
+    flex-direction: column;
+    width: 100%;
+    margin: auto;
+  }
+
+  app-location-detail {
+    width: 100%;
+  }
+
+  .input-fields {
+    width: 100%;
+  }
+
+  .location-wrapper {
+    width: 100%;
+  }
+
+}
